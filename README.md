@@ -1,4 +1,4 @@
-# Timberborn-RotatingSun# 
+# Timberborn-RotatingSun
 This plugin for Timberborn enables for the in-game Sun to rotate around the map instead of being tied to the player camera.
 Also allows optionally to make Sunflowers make rotate with the Sun, even though this is unrealistic. Pretty cool tho.
 
@@ -9,11 +9,11 @@ there are two options, one that enables the Sun to rotate and the other enables 
 
 It is also possible to control these settings via the in-game menu. The Plugin adds a menu button, like below.
 
-![MenuButton](https://raw.githubusercontent.com/hytonhan/Timberborn-RotatingSun/main/attachments/MenuButton.PNG?raw=true)
+![MenuButton](https://raw.githubusercontent.com/hytonhan/Timberborn-RotatingSun/main/package/MenuButton.PNG?raw=true)
 
 The button will open up a settings menu, example below.
 
-![OptionsMenu](https://raw.githubusercontent.com/hytonhan/Timberborn-RotatingSun/main/attachments/OptionsMenu.PNG?raw=true)
+![OptionsMenu](https://raw.githubusercontent.com/hytonhan/Timberborn-RotatingSun/main/package/OptionsMenu.PNG?raw=true)
 
 
 # Installing 
