@@ -1,0 +1,5 @@
+ID,Text,Comment
+menu.rotatingsun, Rotating Sun Options
+rotatingsun.optionsheader, Rotating Sun Options
+rotatingsun.enablesun, Enable Sun Rotation
+rotatingsun.enablerotatingsunflowers, Enable Sunflower rotation
