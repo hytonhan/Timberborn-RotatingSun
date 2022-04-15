@@ -4,6 +4,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using SunFix.UI;
 using System;
+using System.Linq;
 using System.Reflection;
 using Timberborn.SkySystem;
 using TimberbornAPI;
@@ -50,7 +51,13 @@ namespace SunFix
 
              if (RotatingSunEnabled)
             {
-                _harmony.Patch(original, prefix: new HarmonyMethod(typeof(Patches), nameof(Patches.Prefix), new Type[] {typeof(Sun) }));
+                var patches = Harmony.GetPatchInfo(original);
+                if(patches.Prefixes.Count > 0 
+                   && patches.Prefixes.Where(x => x.owner == "hytone.plugins.rotatingsun").Count() > 0)
+                {
+                    return;
+                }
+                _harmony.Patch(original, prefix: new HarmonyMethod(typeof(Patches), nameof(Patches.Prefix), new Type[] { typeof(Sun) }));
             }
             else
             {
