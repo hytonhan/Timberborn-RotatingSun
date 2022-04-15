@@ -1,8 +1,5 @@
-﻿using HarmonyLib;
-using System;
+﻿using System;
 using Timberborn.CoreUI;
-using Timberborn.MainMenuScene;
-using Timberborn.Options;
 using TimberbornAPI.UIBuilderSystem;
 using UnityEngine.UIElements;
 using static UnityEngine.UIElements.Length.Unit;
@@ -26,7 +23,6 @@ namespace SunFix.UI
 
         private void OpenOptionsPanel()
         {
-            Console.WriteLine("foo2");
             _panelStack.HideAndPush(this);
         }
 
@@ -36,8 +32,6 @@ namespace SunFix.UI
         /// <returns></returns>
         public VisualElement GetPanel()
         {
-
-            Console.WriteLine("foo");
             UIBoxBuilder boxBuilder = _uiBuilder.CreateBoxBuilder()
                 .SetHeight(new Length(200, Pixel))
                 .SetWidth(new Length(600, Pixel))
@@ -91,7 +85,6 @@ namespace SunFix.UI
         /// <param name="changeEvent"></param>
         private void ToggleSunflowerEnabled(ChangeEvent<bool> changeEvent)
         {
-            Console.WriteLine("Sunflowers toggled");
             RotatingSunPlugin.RotatingSunFlowersEnabled = changeEvent.newValue;
 
             if(!RotatingSunPlugin.ConfigFile.TryGetEntry<bool>("General", nameof(RotatingSunPlugin.RotatingSunFlowersEnabled), out var setting))

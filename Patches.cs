@@ -103,17 +103,11 @@ namespace SunFix
     {
         public static void Postfix(ref VisualElement __result)
         {
-            Console.WriteLine($"bar1");
             VisualElement root = __result.Query("MainMenuPanel");
-            Console.WriteLine($"bar2");
             Button button = new Button() { classList = { "menu-button" } };
-            Console.WriteLine($"bar3");
             button.text = "Rotating Sun Options";
-            Console.WriteLine($"bar4");
             button.clicked += SunMenu.OpenOptionsDelegate;
-            Console.WriteLine($"bar5");
             root.Insert(6, button);
-            Console.WriteLine($"bar6");
         }
     }
 
