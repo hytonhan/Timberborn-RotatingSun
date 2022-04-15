@@ -66,7 +66,6 @@ namespace SunFix
                     // This is only needed to rotate Sunflowers back to starting position
                     var nightProgress = (hoursToday - dayLength) / nightLength;
                     _y = Mathf.Clamp(180 - (nightProgress * 180), 10f, 170f);
-                    _x = 270;
                 }
             }
             // Between Ticks, smoohtly transition between the rotation angles
