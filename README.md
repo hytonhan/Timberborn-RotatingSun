@@ -22,6 +22,9 @@ and adding the dll to your bepinex plugins folder. This plugin is dependent on t
 
 # Changelog
 
+## v1.1.1 - 15.4.2022
+ - Minor tweak to Suns' rotation at dusk
+
 ## v1.1.0 - 15.4.2022
  - Added In-game option menus back
 

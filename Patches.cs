@@ -55,7 +55,7 @@ namespace SunFix
                     else
                     {
                         // in the afternoon sun goes down
-                        _x = Mathf.Clamp((_xOffset * 2 + 5) - ((progress) * (_xOffset * 2)), 5f, _xOffset);
+                        _x = Mathf.Clamp((_xOffset * 2) - ((progress) * (_xOffset * 2)), 0f, _xOffset);
                     }
                     // During day, y goes smoothly from 10 to 170
                     _y = Mathf.Clamp((hoursToday / dayLength) * 180, 10f, 170f);

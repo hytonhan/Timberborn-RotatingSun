@@ -1,6 +1,6 @@
 {
   "name": "RotatingSun",
-  "version_number": "1.0.1",
+  "version_number": "1.1.1",
   "website_url": "https://github.com/hytonhan/Timberborn-RotatingSun",
   "description": "Make Sun rotate around the map instead of player camera.",
   "dependencies": [
