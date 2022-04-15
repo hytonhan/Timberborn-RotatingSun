@@ -22,6 +22,12 @@ and adding the dll to your bepinex plugins folder. This plugin is dependent on t
 
 # Changelog
 
+## v1.1.0 - 15.4.2022
+ - Added In-game option menus back
+
+## v1.0.1 - 14.4.2022
+ - Removed option menus due to errors
+
 ## v1.0.0 - 14.4.2022
  - Initial release with two features
 	1. Enables Sun to rotate around the map
