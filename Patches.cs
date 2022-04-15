@@ -19,7 +19,7 @@ namespace SunFix
     {
         private static readonly float _xOffset = 50f;
         private static float _transitionProgress = 0f;
-        private static float _transitionTime = 0.6f; // This is a bs magic number, no logic, just trial and error to find value that works
+        private static float _transitionTime = 0.5f; // This is a bs magic number, no logic, just trial and error to find value that works
         private static float _lastTimestamp;
         private static float _x;
         private static float _y;
@@ -92,10 +92,9 @@ namespace SunFix
         public static void Postfix(ref VisualElement __result)
         {
             VisualElement root = __result.Query("OptionsBox");
-            UIBuilder uiBuilder = TimberAPI.DependencyContainer.GetInstance<UIBuilder>();
-            LocalizableButton button = uiBuilder.Presets().Buttons().Button("menu.rotatingsun", new Length(244, Length.Unit.Pixel));
+            Button button = new Button() { classList = { "menu-button" } };
+            button.text = "Rotating Sun Options";
             button.clicked += SunMenu.OpenOptionsDelegate;
-            uiBuilder.InitializeVisualElement(button);
             root.Insert(6, button);
         }
     }
@@ -108,12 +107,17 @@ namespace SunFix
     {
         public static void Postfix(ref VisualElement __result)
         {
+            Console.WriteLine($"bar1");
             VisualElement root = __result.Query("MainMenuPanel");
-            UIBuilder uiBuilder = TimberAPI.DependencyContainer.GetInstance<UIBuilder>();
-            LocalizableButton button = uiBuilder.Presets().Buttons().Button("menu.rotatingsun", new Length(244, Length.Unit.Pixel));
+            Console.WriteLine($"bar2");
+            Button button = new Button() { classList = { "menu-button" } };
+            Console.WriteLine($"bar3");
+            button.text = "Rotating Sun Options";
+            Console.WriteLine($"bar4");
             button.clicked += SunMenu.OpenOptionsDelegate;
-            uiBuilder.InitializeVisualElement(button);
+            Console.WriteLine($"bar5");
             root.Insert(6, button);
+            Console.WriteLine($"bar6");
         }
     }
 
