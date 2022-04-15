@@ -4,10 +4,6 @@ using System;
 using Timberborn.MainMenuScene;
 using Timberborn.Options;
 using Timberborn.SkySystem;
-using Timberborn.TickSystem;
-using TimberbornAPI;
-using TimberbornAPI.UIBuilderSystem;
-using TimberbornAPI.UIBuilderSystem.CustomElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -19,7 +15,7 @@ namespace SunFix
     {
         private static readonly float _xOffset = 50f;
         private static float _transitionProgress = 0f;
-        private static float _transitionTime = 0.5f; // This is a bs magic number, no logic, just trial and error to find value that works
+        private static float _transitionTime = 0.3f; // A Tick lasts 0.3 s
         private static float _lastTimestamp;
         private static float _x;
         private static float _y;
