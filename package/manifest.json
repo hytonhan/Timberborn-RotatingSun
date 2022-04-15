@@ -1,0 +1,10 @@
+{
+  "name": "RotatingSun",
+  "version_number": "1.0.1",
+  "website_url": "https://github.com/hytonhan/Timberborn-RotatingSun",
+  "description": "Make Sun rotate around the map instead of player camera.",
+  "dependencies": [
+    "BepInEx-BepInExPack_Timberborn-5.4.19",
+    "Timberborn_Central-TimberAPI-0.2.1"
+  ]
+}
