@@ -29,14 +29,14 @@ namespace SunFix
             Log = Logger;
             InitConfigs();
 
+            TimberAPI.DependencyRegistry.AddConfigurator(new RotatingSunConfigurator());
+            TimberAPI.DependencyRegistry.AddConfigurator(new UIConfigurator(), SceneEntryPoint.Global);
+
             // Harmony patches
             _original = typeof(Sun).GetMethod(nameof(Sun.RotateSunWithCamera), BindingFlags.NonPublic | BindingFlags.Instance);
             _harmony = new Harmony("hytone.plugins.rotatingsun");
             _harmony.PatchAll();
             PatchSunRotation();
-
-            TimberAPI.DependencyRegistry.AddConfigurator(new RotatingSunConfigurator());
-            TimberAPI.DependencyRegistry.AddConfigurator(new UIConfigurator(), SceneEntryPoint.Global);
 
             ConfigFile = Config;
         }
