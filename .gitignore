@@ -348,3 +348,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/package/RotatingSun.zip
+/package/RotatingSun/plugins/SunFix.dll
+/package/README.md
