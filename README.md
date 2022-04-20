@@ -22,6 +22,9 @@ and adding the dll to your bepinex plugins folder. This plugin is dependent on t
 
 # Changelog
 
+## v2.0.0 - 20.4.2022
+- Updated to work with Update 2
+
 ## v1.1.1 - 15.4.2022
  - Minor tweak to Suns' rotation at dusk
 

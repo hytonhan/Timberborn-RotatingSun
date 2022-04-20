@@ -12,7 +12,7 @@ using TimberbornAPI.Common;
 
 namespace SunFix
 {
-    [BepInPlugin("hytone.plugins.rotatingsun", "RotatingSunPlugin", "1.0.0")]
+    [BepInPlugin("hytone.plugins.rotatingsun", "RotatingSunPlugin", "2.0.0")]
     [BepInDependency("com.timberapi.timberapi")]
     [HarmonyPatch]
     public class RotatingSunPlugin : BaseUnityPlugin

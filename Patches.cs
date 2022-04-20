@@ -24,9 +24,9 @@ namespace SunFix
         [HarmonyPatch(typeof(Sun), nameof(Sun.RotateSunWithCamera))]
         public static bool Prefix(Sun __instance)
         {
-            var hoursToday = __instance._dayNightCycle.HoursPassedToday;
-            var dayLength = __instance._dayNightCycle.DaytimeLengthInHours;
-            var nightLength = __instance._dayNightCycle.NighttimeLengthInHours;
+            var hoursToday = __instance._dayStageCycle._dayNightCycle.HoursPassedToday;
+            var dayLength = __instance._dayStageCycle._dayNightCycle.DaytimeLengthInHours;
+            var nightLength = __instance._dayStageCycle._dayNightCycle.NighttimeLengthInHours;
 
             var progress = (hoursToday / dayLength);
 
