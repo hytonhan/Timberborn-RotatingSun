@@ -22,6 +22,13 @@ and adding the dll to your bepinex plugins folder. This plugin is dependent on t
 
 # Changelog
 
+## v2.1.1 - 7.8.2022
+- Fixed incorrect label in option menu
+
+## v2.1.0 - 7.8.2022
+- Added alternate Sun path for Drought
+- Added option to change Sun low and high angles
+
 ## v2.0.0 - 20.4.2022
 - Updated to work with Update 2
 

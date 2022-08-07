@@ -12,13 +12,19 @@ using TimberbornAPI.Common;
 
 namespace SunFix
 {
-    [BepInPlugin("hytone.plugins.rotatingsun", "RotatingSunPlugin", "2.0.0")]
+    [BepInPlugin("hytone.plugins.rotatingsun", "RotatingSunPlugin", "2.1.1")]
     [BepInDependency("com.timberapi.timberapi")]
     [HarmonyPatch]
     public class RotatingSunPlugin : BaseUnityPlugin
     {
         public static bool RotatingSunEnabled { get; set; }
         public static bool RotatingSunFlowersEnabled { get; set; }
+
+        public static int TemperateSunAngleLow { get; set; }
+        public static int TemperateSunAngleHigh { get; set; }
+        public static int DroughtSunAngleLow { get; set; }
+        public static int DroughtSunAngleHigh { get; set; }
+
 
         private static Harmony _harmony;
         private static MethodInfo _original;
@@ -97,6 +103,30 @@ namespace SunFix
                 nameof(RotatingSunFlowersEnabled),
                 false,
                 "Enable Sunflowers to rotate to face the Sun.").Value;
+
+            TemperateSunAngleLow = Config.Bind(
+                "General",
+                nameof(TemperateSunAngleLow),
+                SunMenu._sunAngleMinDefault,
+                "Sun starting angle during Temperate weather.").Value;
+
+            TemperateSunAngleHigh = Config.Bind(
+                "General",
+                nameof(TemperateSunAngleHigh),
+                SunMenu._sunAngleMaxDefaultTemperate,
+                "Sun High angle during Temperate weather.").Value;
+
+            DroughtSunAngleLow = Config.Bind(
+                "General",
+                nameof(DroughtSunAngleLow),
+                SunMenu._sunAngleMinDefault,
+                "Sun starting angle during Drought.").Value;
+
+            DroughtSunAngleHigh = Config.Bind(
+                "General",
+                nameof(DroughtSunAngleHigh),
+                SunMenu._sunAngleMaxDefaultDrought,
+                "Sun High angle during Drought.").Value;
 
         }
     }

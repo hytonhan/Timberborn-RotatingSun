@@ -13,7 +13,10 @@ namespace SunFix
     [HarmonyPatch]
     public static class Patches
     {
-        private static readonly float _xOffset = 50f;
+        public static float XMinAngle = 5f;
+        public static float XMaxAngle = 50f;
+        public static float XDroughtMinAngle = 5f;
+        public static float XDroughtMaxAngle = 80f;
         private static float _transitionProgress = 0f;
         private static float _transitionTime = 0.3f; // A Tick lasts 0.3 s
         private static float _lastTimestamp;
@@ -50,12 +53,25 @@ namespace SunFix
                     if (progress <= 0.5)
                     {
                         // in the morning sun goes up, maxing at _xOffset
-                        _x = Mathf.Clamp(progress * (_xOffset * 2) + 5f, 5f, _xOffset);
+                        if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
+                        {
+                            _x = Mathf.Clamp(progress * (XDroughtMaxAngle * 2) + XDroughtMinAngle, XDroughtMinAngle, XDroughtMaxAngle);
+                        }
+                        else {
+                            _x = Mathf.Clamp(progress * (XMaxAngle * 2) + XMinAngle, XMinAngle, XMaxAngle);
+                        }
                     }
                     else
                     {
                         // in the afternoon sun goes down
-                        _x = Mathf.Clamp((_xOffset * 2) - ((progress) * (_xOffset * 2)), 0f, _xOffset);
+                        if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
+                        {
+                            _x = Mathf.Clamp((XDroughtMaxAngle * 2) - ((progress) * (XDroughtMaxAngle * 2)), 0f, XDroughtMaxAngle);
+                        }
+                        else 
+                        {
+                             _x = Mathf.Clamp((XMaxAngle * 2) - ((progress) * (XMaxAngle * 2)), 0f, XMaxAngle);
+                        }
                     }
                     // During day, y goes smoothly from 10 to 170
                     _y = Mathf.Clamp((hoursToday / dayLength) * 180, 10f, 170f);
