@@ -1,9 +1,11 @@
 ﻿using HarmonyLib;
 using SunFix.UI;
 using System;
+using Timberborn.Localization;
 using Timberborn.MainMenuScene;
 using Timberborn.Options;
 using Timberborn.SkySystem;
+using TimberbornAPI;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -102,9 +104,10 @@ namespace SunFix
     {
         public static void Postfix(ref VisualElement __result)
         {
+            var loc = TimberAPI.DependencyContainer.GetInstance<ILoc>();
             VisualElement root = __result.Query("OptionsBox");
             Button button = new Button() { classList = { "menu-button" } };
-            button.text = "Rotating Sun Options";
+            button.text = loc.T("menu.rotatingsun");
             button.clicked += SunMenu.OpenOptionsDelegate;
             root.Insert(6, button);
         }
@@ -118,9 +121,10 @@ namespace SunFix
     {
         public static void Postfix(ref VisualElement __result)
         {
+            var loc = TimberAPI.DependencyContainer.GetInstance<ILoc>();
             VisualElement root = __result.Query("MainMenuPanel");
             Button button = new Button() { classList = { "menu-button" } };
-            button.text = "Rotating Sun Options";
+            button.text = loc.T("menu.rotatingsun");
             button.clicked += SunMenu.OpenOptionsDelegate;
             root.Insert(6, button);
         }

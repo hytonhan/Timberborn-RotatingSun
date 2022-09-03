@@ -22,6 +22,9 @@ and adding the dll to your bepinex plugins folder. This plugin is dependent on t
 
 # Changelog
 
+## v2.1.2 - 1.9.2022
+- Added japanese translations
+
 ## v2.1.1 - 7.8.2022
 - Fixed incorrect label in option menu
 
