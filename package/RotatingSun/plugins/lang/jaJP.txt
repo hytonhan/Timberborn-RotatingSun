@@ -1,0 +1,11 @@
+ID,Text,Comment
+menu.rotatingsun,太陽の動き設定
+rotatingsun.optionsheader,太陽の動き設定
+rotatingsun.enablesun,太陽を動かす
+rotatingsun.enablerotatingsunflowers,ヒマワリを動かす
+rotatingsun.SunAngleTemperateHeader,温暖な期間の太陽光の角度
+rotatingsun.SunAngleDroughtHeader,干ばつ期間の太陽光の角度
+rotatingsun.SunAngleLowTemperate,温暖な期間の日射角度（低）
+rotatingsun.SunAngleHighTemperate,温暖な期間の南中高度（高）
+rotatingsun.SunAngleLowDrought,干ばつ期間の日射角度（低）
+rotatingsun.SunAngleHighDrought,干ばつ期間の南中高度（高）
