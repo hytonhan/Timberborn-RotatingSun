@@ -25,9 +25,10 @@ namespace SunFix
         public static int DroughtSunAngleLow { get; set; }
         public static int DroughtSunAngleHigh { get; set; }
 
+        public static int MoonAngle { get; set; }
+
 
         private static Harmony _harmony;
-        private static MethodInfo _original;
         public static ConfigFile ConfigFile;
         internal static ManualLogSource Log;
 
@@ -39,8 +40,6 @@ namespace SunFix
             TimberAPI.DependencyRegistry.AddConfigurator(new RotatingSunConfigurator());
             TimberAPI.DependencyRegistry.AddConfigurator(new UIConfigurator(), SceneEntryPoint.Global);
 
-            // Harmony patches
-            _original = typeof(Sun).GetMethod(nameof(Sun.RotateSunWithCamera), BindingFlags.NonPublic | BindingFlags.Instance);
             _harmony = new Harmony("hytone.plugins.rotatingsun");
             _harmony.PatchAll();
             PatchSunRotation();
@@ -54,20 +53,36 @@ namespace SunFix
         public static void PatchSunRotation()
         {
             var original = typeof(Sun).GetMethod(nameof(Sun.RotateSunWithCamera), BindingFlags.NonPublic | BindingFlags.Instance);
+            var original2 = typeof(Sun).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
+                                       .Single(x => x.Name == nameof(Sun.UpdateColors) &&
+                                                    x.IsPrivate == true &&
+                                                    x.GetParameters().Length == 1);
 
-             if (RotatingSunEnabled)
+            if (RotatingSunEnabled)
             {
                 var patches = Harmony.GetPatchInfo(original);
-                if(patches.Prefixes.Count > 0 
-                   && patches.Prefixes.Where(x => x.owner == "hytone.plugins.rotatingsun").Count() > 0)
+                if (patches.Prefixes.Count == 0
+                    || patches.Prefixes.Where(x => x.owner == "hytone.plugins.rotatingsun").Count() == 0)
                 {
-                    return;
+                    _harmony.Patch(original,
+                                   prefix: new HarmonyMethod(typeof(Patches),
+                                                             nameof(Patches.Prefix),
+                                                             new Type[] { typeof(Sun), typeof(DayStageTransition) }));
                 }
-                _harmony.Patch(original, prefix: new HarmonyMethod(typeof(Patches), nameof(Patches.Prefix), new Type[] { typeof(Sun) }));
+                patches = Harmony.GetPatchInfo(original2);
+                if (patches.Prefixes.Count == 0
+                    || patches.Prefixes.Where(x => x.owner == "hytone.plugins.rotatingsun").Count() == 0)
+                {
+                    _harmony.Patch(original2,
+                                   prefix: new HarmonyMethod(typeof(Patches),
+                                                             nameof(Patches.UpdateColorsPrefix),
+                                                             new Type[] { typeof(Sun), typeof(DayStageTransition) }));
+                }
             }
             else
             {
                 _harmony.Unpatch(original, HarmonyPatchType.Prefix, "hytone.plugins.rotatingsun");
+                _harmony.Unpatch(original2, HarmonyPatchType.Prefix, "hytone.plugins.rotatingsun");
             }
         }
 
@@ -78,13 +93,14 @@ namespace SunFix
         {
             var sunflowers = FindObjectsOfType(typeof(RotatingSunflower));
 
-            foreach(RotatingSunflower sunflower in sunflowers)
+            foreach (RotatingSunflower sunflower in sunflowers)
             {
-                if(RotatingSunFlowersEnabled)
+                if (RotatingSunFlowersEnabled)
                 {
                     sunflower.enabled = true;
                 }
-                else{
+                else
+                {
                     sunflower.enabled = false;
                 }
             }
@@ -127,6 +143,12 @@ namespace SunFix
                 nameof(DroughtSunAngleHigh),
                 SunMenu._sunAngleMaxDefaultDrought,
                 "Sun High angle during Drought.").Value;
+
+            MoonAngle = Config.Bind(
+                "General",
+                nameof(MoonAngle),
+                SunMenu._moonAngleDefault,
+                "The Moon's angle.").Value;
 
         }
     }

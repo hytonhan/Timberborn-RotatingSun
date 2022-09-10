@@ -11,7 +11,6 @@ using UnityEngine.UIElements;
 
 namespace SunFix
 {
-
     [HarmonyPatch]
     public static class Patches
     {
@@ -19,6 +18,9 @@ namespace SunFix
         public static float XMaxAngle = 50f;
         public static float XDroughtMinAngle = 5f;
         public static float XDroughtMaxAngle = 80f;
+
+        public static float MoonAngle = 50f;
+
         private static float _transitionProgress = 0f;
         private static float _transitionTime = 0.3f; // A Tick lasts 0.3 s
         private static float _lastTimestamp;
@@ -26,14 +28,15 @@ namespace SunFix
         private static float _y;
         private static Quaternion _lastRotation;
 
-        [HarmonyPatch(typeof(Sun), nameof(Sun.RotateSunWithCamera))]
-        public static bool Prefix(Sun __instance)
-        {
-            var hoursToday = __instance._dayStageCycle._dayNightCycle.HoursPassedToday;
-            var dayLength = __instance._dayStageCycle._dayNightCycle.DaytimeLengthInHours;
-            var nightLength = __instance._dayStageCycle._dayNightCycle.NighttimeLengthInHours;
+        private static float _dayLength = 0f;
+        private static float _nightLength = 0f;
 
-            var progress = (hoursToday / dayLength);
+        [HarmonyPatch(typeof(Sun), nameof(Sun.RotateSunWithCamera))]
+        public static bool Prefix(Sun __instance, DayStageTransition dayStageTransition)
+        {
+            InitDayLengths(__instance);
+            var hoursToday = __instance._dayStageCycle._dayNightCycle.HoursPassedToday;
+            var progress = (hoursToday / _dayLength);
 
             _transitionProgress += Time.deltaTime;
             float cappedTransitionPorgress = Math.Min(1f, _transitionProgress / _transitionTime);
@@ -46,45 +49,7 @@ namespace SunFix
                 _lastRotation = __instance._sun.transform.localRotation;
                 _lastTimestamp = hoursToday;
 
-                // This if calculates x and y angles during daytime.
-                // x is basically shadow's length.
-                // y is the sun's rotation.
-                // During day time, x goes 0 -> 90 -> 0 and y 0 -> 180, with little offsets
-                if (progress <= 1)
-                {
-                    if (progress <= 0.5)
-                    {
-                        // in the morning sun goes up, maxing at _xOffset
-                        if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
-                        {
-                            _x = Mathf.Clamp(progress * (XDroughtMaxAngle * 2) + XDroughtMinAngle, XDroughtMinAngle, XDroughtMaxAngle);
-                        }
-                        else {
-                            _x = Mathf.Clamp(progress * (XMaxAngle * 2) + XMinAngle, XMinAngle, XMaxAngle);
-                        }
-                    }
-                    else
-                    {
-                        // in the afternoon sun goes down
-                        if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
-                        {
-                            _x = Mathf.Clamp((XDroughtMaxAngle * 2) - ((progress) * (XDroughtMaxAngle * 2)), 0f, XDroughtMaxAngle);
-                        }
-                        else 
-                        {
-                             _x = Mathf.Clamp((XMaxAngle * 2) - ((progress) * (XMaxAngle * 2)), 0f, XMaxAngle);
-                        }
-                    }
-                    // During day, y goes smoothly from 10 to 170
-                    _y = Mathf.Clamp((hoursToday / dayLength) * 180, 10f, 170f);
-                }
-                else
-                {
-                    // During the the, rotate y back from 180 to 10 smootly. 
-                    // This is only needed to rotate Sunflowers back to starting position
-                    var nightProgress = (hoursToday - dayLength) / nightLength;
-                    _y = Mathf.Clamp(180 - (nightProgress * 180), 10f, 170f);
-                }
+                SetSunXAndYCoordinates(__instance, dayStageTransition, hoursToday, progress);
             }
             // Between Ticks, smoohtly transition between the rotation angles
             if (cappedTransitionPorgress < 1f)
@@ -94,6 +59,140 @@ namespace SunFix
             return false;
         }
 
+        /// <summary>
+        /// This calculates x and y angles of the Sun
+        /// x is basically shadow's length.
+        /// y is the sun's rotation.
+        /// During day time, x goes 0 -> 90 -> 0 and y 0 -> 180, with little offsets
+        /// </summary>
+        /// <param name="__instance"></param>
+        /// <param name="dayStageTransition"></param>
+        /// <param name="hoursToday"></param>
+        /// <param name="progress"></param>
+        private static void SetSunXAndYCoordinates(Sun __instance, DayStageTransition dayStageTransition, float hoursToday, float progress)
+        {
+            if (progress <= 1)
+            {
+                if (progress <= 0.5)
+                {
+                    // in the morning sun goes up, maxing at _xOffset
+                    if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
+                    {
+                        _x = Mathf.Clamp(progress * (XDroughtMaxAngle * 2) + XDroughtMinAngle, XDroughtMinAngle, XDroughtMaxAngle);
+                    }
+                    else
+                    {
+                        _x = Mathf.Clamp(progress * (XMaxAngle * 2) + XMinAngle, XMinAngle, XMaxAngle);
+                    }
+                }
+                else
+                {
+                    // in the afternoon sun goes down
+                    if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
+                    {
+                        _x = Mathf.Clamp((XDroughtMaxAngle * 2) - ((progress) * (XDroughtMaxAngle * 2)), 0f, XDroughtMaxAngle);
+                    }
+                    else
+                    {
+                        _x = Mathf.Clamp((XMaxAngle * 2) - ((progress) * (XMaxAngle * 2)), 0f, XMaxAngle);
+                    }
+                }
+                // During day, y goes smoothly from 10 to 170
+                _y = Mathf.Clamp((hoursToday / _dayLength) * 180, 10f, 170f);
+            }
+            else
+            {
+                var nightProgress = (hoursToday - _dayLength) / _nightLength;
+                _y = Mathf.Clamp(180 - (nightProgress * 180), 10f, 170f);
+                if (dayStageTransition.CurrentDayStage == DayStage.Night)
+                {
+                    float minAngle = __instance._dayStageCycle._weatherService._droughtService.IsDrought
+                        ? XDroughtMinAngle
+                        : XMinAngle;
+                    
+                    if (nightProgress <= 0.1)
+                    {
+                        _x = Mathf.Clamp(Mathf.Lerp(0f, 1f, nightProgress * 10) * (MoonAngle * 2) + minAngle, 0f, MoonAngle);
+                    }
+                    else if (nightProgress >= 0.9)
+                    {
+                        if(dayStageTransition.NextDayStageIsInDrought)
+                        {
+                            minAngle = XDroughtMinAngle;
+                        }
+                        _x = Mathf.Clamp(Mathf.Lerp(1f, 0f, (nightProgress - 0.9f) * 10) * (MoonAngle * 2) + minAngle, minAngle, MoonAngle);
+                    }
+
+                }
+            }
+        }
+
+        private static void InitDayLengths(Sun __instance)
+        {
+            if (_dayLength == 0f)
+            {
+                _dayLength = __instance._dayStageCycle._dayNightCycle.DaytimeLengthInHours + 2;
+            }
+            if (_nightLength == 0f)
+            {
+                _nightLength = __instance._dayStageCycle._dayNightCycle.NighttimeLengthInHours - 2.5f;
+            }
+        }
+
+        [HarmonyPatch(typeof(Sun), nameof(Sun.UpdateColors), new Type[] { typeof(DayStageTransition) })]
+        [HarmonyPrefix]
+        public static bool UpdateColorsPrefix(Sun __instance, DayStageTransition dayStageTransition)
+        {
+            DayStageColors dayStageColors = __instance.DayStageColors(dayStageTransition.CurrentDayStage);
+            DayStageColors dayStageColors2 = __instance.DayStageColors(dayStageTransition.NextDayStage);
+            float transitionProgress = dayStageTransition.TransitionProgress;
+            __instance._sun.color = Color.Lerp(dayStageColors.SunColor, dayStageColors2.SunColor, transitionProgress);
+            __instance._sun.intensity = Mathf.Lerp(dayStageColors.SunIntensity, dayStageColors2.SunIntensity, transitionProgress);
+            //__instance._sun.shadowStrength = Mathf.Lerp(dayStageColors.ShadowStrength, dayStageColors2.ShadowStrength, transitionProgress);
+            RenderSettings.ambientSkyColor = Color.Lerp(dayStageColors.AmbientSkyColor, dayStageColors2.AmbientSkyColor, transitionProgress);
+            RenderSettings.ambientEquatorColor = Color.Lerp(dayStageColors.AmbientEquatorColor, dayStageColors2.AmbientEquatorColor, transitionProgress);
+            RenderSettings.ambientGroundColor = Color.Lerp(dayStageColors.AmbientGroundColor, dayStageColors2.AmbientGroundColor, transitionProgress);
+            RenderSettings.reflectionIntensity = Mathf.Lerp(dayStageColors.ReflectionsIntensity, dayStageColors2.ReflectionsIntensity, transitionProgress);
+            FogSettings obj = (dayStageTransition.CurrentDayStageIsInDrought ? dayStageColors.DroughtFog : dayStageColors.TemperateWeatherFog);
+            FogSettings fogSettings = (dayStageTransition.NextDayStageIsInDrought ? dayStageColors2.DroughtFog : dayStageColors2.TemperateWeatherFog);
+            RenderSettings.fogColor = Color.Lerp(obj.FogColor, fogSettings.FogColor, transitionProgress);
+            RenderSettings.fogDensity = Mathf.Lerp(obj.FogDensity, fogSettings.FogDensity, transitionProgress);
+
+
+            InitDayLengths(__instance);
+            var hoursToday = __instance._dayStageCycle._dayNightCycle.HoursPassedToday;
+            var nightProgress = (hoursToday - _dayLength) / _nightLength;
+            
+            SetShadowStrengthDuringNightAndSunrise(__instance, dayStageTransition, dayStageColors, dayStageColors2, transitionProgress, nightProgress);
+
+            return false;
+        }
+
+        private static void SetShadowStrengthDuringNightAndSunrise(Sun __instance, DayStageTransition dayStageTransition, DayStageColors dayStageColors, DayStageColors dayStageColors2, float transitionProgress, float nightProgress)
+        {
+            if (dayStageTransition.CurrentDayStage == DayStage.Night)
+            {
+                if (nightProgress <= 0.15f)
+                {
+                    __instance._sun.shadowStrength = Mathf.Lerp(0f, 0.8f, (nightProgress - 0.05f) * 10);
+                }
+                else if (nightProgress >= 0.85f)
+                {
+                    __instance._sun.shadowStrength = Mathf.Lerp(0.8f, 0f, (nightProgress - 0.85f) * 10);
+                }
+            }
+            else
+            {
+                if (dayStageTransition.CurrentDayStage == DayStage.Sunrise)
+                {
+                    __instance._sun.shadowStrength = Mathf.Lerp(0f, 1f, dayStageTransition.TransitionProgress);
+                }
+                else
+                {
+                    __instance._sun.shadowStrength = Mathf.Lerp(dayStageColors.ShadowStrength, dayStageColors2.ShadowStrength, transitionProgress);
+                }
+            }
+        }
     }
 
     /// <summary>

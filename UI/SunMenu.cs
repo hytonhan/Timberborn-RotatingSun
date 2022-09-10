@@ -21,6 +21,8 @@ namespace SunFix.UI
         public const int _sunAngleMaxDefaultTemperate = 50;
         public const int _sunAngleMaxDefaultDrought = 80;
 
+        public const int _moonAngleDefault = 50;
+
         private const string _rotatingOptionsHeaderLoc = "rotatingsun.optionsheader";
         private const string _rotatingEnabledLoc = "rotatingsun.enablesun";
         private const string _rotatingTemperateLowLoc = "rotatingsun.SunAngleLowTemperate";
@@ -28,12 +30,15 @@ namespace SunFix.UI
         private const string _rotatingDroughtLowLoc = "rotatingsun.SunAngleLowDrought";
         private const string _rotatingDroughtHighLoc = "rotatingsun.SunAngleHighDrought";
         private const string _rotatingSunFlowerRotationEnabledLoc = "rotatingsun.enablerotatingsunflowers";
+        private const string _rotatingMoonAngleLoc = "rotatingsun.MoonAngle";
 
         private Label _temperateLowLabel;
         private Label _temperateHighLabel;
 
         private Label _droughtLowLabel;
         private Label _droughtHighLabel;
+
+        private Label _moongAngleLabel;
 
         public SunMenu(
             UIBuilder uiBuilder, 
@@ -58,7 +63,7 @@ namespace SunFix.UI
         public VisualElement GetPanel()
         {
             UIBoxBuilder boxBuilder = _uiBuilder.CreateBoxBuilder()
-                .SetHeight(new Length(500, Pixel))
+                .SetHeight(new Length(520, Pixel))
                 .SetWidth(new Length(600, Pixel))
                 .ModifyScrollView(builder => builder.SetName("elementPreview"));
 
@@ -76,6 +81,9 @@ namespace SunFix.UI
             sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.DroughtSunAngleLow, name: nameof(RotatingSunPlugin.DroughtSunAngleLow), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
             sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.DroughtSunAngleHigh) + "Label", text: $"{_loc.T(_rotatingDroughtHighLoc)}: {RotatingSunPlugin.DroughtSunAngleHigh}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
             sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.DroughtSunAngleHigh, name: nameof(RotatingSunPlugin.DroughtSunAngleHigh), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            
+            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.MoonAngle) + "Label", text: $"{_loc.T(_rotatingMoonAngleLoc)}: {RotatingSunPlugin.MoonAngle}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.MoonAngle, name: nameof(RotatingSunPlugin.MoonAngle), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
 
             sunOptionsContent.AddPreset(factory => factory.Toggles().Checkbox(locKey: _rotatingSunFlowerRotationEnabledLoc, name: "EnableSunflowerRotation"));
 
@@ -99,6 +107,9 @@ namespace SunFix.UI
 
             _droughtLowLabel = root.Q<Label>(nameof(RotatingSunPlugin.DroughtSunAngleLow) + "Label");
             _droughtHighLabel = root.Q<Label>(nameof(RotatingSunPlugin.DroughtSunAngleHigh) + "Label");
+
+            var moongAngleSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.MoonAngle)).RegisterValueChangedCallback(MoongAngleSliderChangedCallback);
+            _moongAngleLabel = root.Q<Label>(nameof(RotatingSunPlugin.MoonAngle) + "Label");
 
             return root;
         }
@@ -243,6 +254,29 @@ namespace SunFix.UI
             Patches.XDroughtMaxAngle = changeEvent.newValue;
             RotatingSunPlugin.TemperateSunAngleHigh = changeEvent.newValue;
             _droughtHighLabel.text = $"{_loc.T(_rotatingDroughtHighLoc)}: {changeEvent.newValue}";
+        }
+
+        private void MoongAngleSliderChangedCallback(ChangeEvent<int> changeEvent)
+        {
+            RotatingSunPlugin.MoonAngle = changeEvent.newValue;
+
+            if (!RotatingSunPlugin.ConfigFile.TryGetEntry<int>("General", nameof(RotatingSunPlugin.MoonAngle), out var setting))
+            {
+                RotatingSunPlugin.Log.LogInfo($"Config \"{nameof(RotatingSunPlugin.MoonAngle)}\" didn't exist. Creating.");
+                RotatingSunPlugin.MoonAngle =
+                    RotatingSunPlugin.ConfigFile.Bind(
+                        "General",
+                        nameof(RotatingSunPlugin.MoonAngle),
+                        _moonAngleDefault,
+                        "The Moon's angle.").Value;
+
+            }
+            setting.Value = changeEvent.newValue;
+            RotatingSunPlugin.ConfigFile.Save();
+
+            Patches.MoonAngle = changeEvent.newValue;
+            RotatingSunPlugin.MoonAngle = changeEvent.newValue;
+            _moongAngleLabel.text = $"{_loc.T(_rotatingMoonAngleLoc)}: {changeEvent.newValue}";
         }
 
         public bool OnUIConfirmed()

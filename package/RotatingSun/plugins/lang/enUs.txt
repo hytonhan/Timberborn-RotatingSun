@@ -9,3 +9,4 @@ rotatingsun.SunAngleLowTemperate, Temperate Sun Angle Low
 rotatingsun.SunAngleHighTemperate, Temperate Sun Angle High
 rotatingsun.SunAngleLowDrought, Drought Sun Angle Low
 rotatingsun.SunAngleHighDrought, Drought Sun Angle High
+rotatingsun.MoonAngle, Moon's angle
