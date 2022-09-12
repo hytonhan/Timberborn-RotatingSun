@@ -22,6 +22,10 @@ and adding the dll to your bepinex plugins folder. This plugin is dependent on t
 
 # Changelog
 
+## v2.2.0 - 10.9.2022
+- Added Moonlight!
+- Tweaks to the timings of the Sun's angles
+
 ## v2.1.2 - 1.9.2022
 - Added japanese translations
 
