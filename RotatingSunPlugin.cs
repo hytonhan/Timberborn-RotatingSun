@@ -6,16 +6,16 @@ using SunFix.UI;
 using System;
 using System.Linq;
 using System.Reflection;
+using TimberApi.ModSystem;
+using TimberApi.ConsoleSystem;
 using Timberborn.SkySystem;
-using TimberbornAPI;
-using TimberbornAPI.Common;
 
 namespace SunFix
 {
     [BepInPlugin("hytone.plugins.rotatingsun", "RotatingSunPlugin", "2.2.0")]
-    [BepInDependency("com.timberapi.timberapi")]
+    [BepInDependency("timberapi.bepinex.entrypoint")]
     [HarmonyPatch]
-    public class RotatingSunPlugin : BaseUnityPlugin
+    public class RotatingSunPlugin : BaseUnityPlugin, IModEntrypoint
     {
         public static bool RotatingSunEnabled { get; set; }
         public static bool RotatingSunFlowersEnabled { get; set; }
@@ -32,13 +32,9 @@ namespace SunFix
         public static ConfigFile ConfigFile;
         internal static ManualLogSource Log;
 
-        public void Awake()
+        public void Entry(IMod mod, IConsoleWriter consoleWriter)
         {
-            Log = Logger;
             InitConfigs();
-
-            TimberAPI.DependencyRegistry.AddConfigurator(new RotatingSunConfigurator());
-            TimberAPI.DependencyRegistry.AddConfigurator(new UIConfigurator(), SceneEntryPoint.Global);
 
             _harmony = new Harmony("hytone.plugins.rotatingsun");
             _harmony.PatchAll();
@@ -93,7 +89,7 @@ namespace SunFix
         {
             var sunflowers = FindObjectsOfType(typeof(RotatingSunflower));
 
-            foreach (RotatingSunflower sunflower in sunflowers)
+            foreach (RotatingSunflower sunflower in sunflowers.Where(x => x.name.Contains("Sun")))
             {
                 if (RotatingSunFlowersEnabled)
                 {
@@ -151,6 +147,7 @@ namespace SunFix
                 "The Moon's angle.").Value;
 
         }
+
     }
 
 }
