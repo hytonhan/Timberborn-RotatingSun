@@ -1,11 +1,14 @@
 ﻿using HarmonyLib;
 using SunFix.UI;
 using System;
+using System.Collections.Generic;
+using TimberApi.DependencyContainerSystem;
+using Timberborn.BlockSystem;
+using Timberborn.Buildings;
 using Timberborn.Localization;
 using Timberborn.MainMenuScene;
 using Timberborn.Options;
 using Timberborn.SkySystem;
-using TimberbornAPI;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -199,11 +202,11 @@ namespace SunFix
     /// Patch to show SunOptions on the In game Menu
     /// </summary>
     [HarmonyPatch(typeof(OptionsBox), "GetPanel")]
-    public static class InGameMenuPanelPatch
+    public class InGameMenuPanelPatch
     {
         public static void Postfix(ref VisualElement __result)
         {
-            var loc = TimberAPI.DependencyContainer.GetInstance<ILoc>();
+            var loc = DependencyContainer.GetInstance<ILoc>();
             VisualElement root = __result.Query("OptionsBox");
             Button button = new Button() { classList = { "menu-button" } };
             button.text = loc.T("menu.rotatingsun");
@@ -220,7 +223,7 @@ namespace SunFix
     {
         public static void Postfix(ref VisualElement __result)
         {
-            var loc = TimberAPI.DependencyContainer.GetInstance<ILoc>();
+            var loc = DependencyContainer.GetInstance<ILoc>();
             VisualElement root = __result.Query("MainMenuPanel");
             Button button = new Button() { classList = { "menu-button" } };
             button.text = loc.T("menu.rotatingsun");
@@ -228,5 +231,4 @@ namespace SunFix
             root.Insert(6, button);
         }
     }
-
 }

@@ -1,0 +1,12 @@
+ID,Text,Comment
+menu.rotatingsun, Rotierende Sonne Optionen
+rotatingsun.optionsheader, Rotierende Sonne Optionen
+rotatingsun.enablesun, Aktiviere Sonnenrotation
+rotatingsun.enablerotatingsunflowers, Aktiviere Sonnenblumenrotation
+rotatingsun.SunAngleTemperateHeader, Sonnenwinkel während gemäßigtem Wetter
+rotatingsun.SunAngleDroughtHeader, Sonnenwinkel während Dürre
+rotatingsun.SunAngleLowTemperate, Gemäßigtes Wetter Sonnenwinkel niedrig
+rotatingsun.SunAngleHighTemperate, Gemäßigtes Wetter Sonnenwinkel hoch
+rotatingsun.SunAngleLowDrought, Dürre Sonnenwinkel niedrig
+rotatingsun.SunAngleHighDrought, Dürre Sonnenwinkel hoch
+rotatingsun.MoonAngle, Mondwinkel

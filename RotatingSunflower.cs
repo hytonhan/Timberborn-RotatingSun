@@ -23,7 +23,15 @@ namespace SunFix
 
         public void Awake()
         {
-            enabled = RotatingSunPlugin.RotatingSunFlowersEnabled;
+            if (this.name.Contains("Sun"))
+            {
+
+                enabled = RotatingSunPlugin.RotatingSunFlowersEnabled;
+            }
+            else
+            {
+                enabled = false;
+            }
         }
 
         public void Start()
