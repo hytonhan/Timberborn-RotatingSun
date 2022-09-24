@@ -12,8 +12,7 @@ using Timberborn.SkySystem;
 
 namespace SunFix
 {
-    [BepInPlugin("hytone.plugins.rotatingsun", "RotatingSunPlugin", "2.2.0")]
-    [BepInDependency("timberapi.bepinex.entrypoint")]
+    [BepInPlugin("hytone.plugins.rotatingsun", "RotatingSunPlugin", "3.0.0")]
     [HarmonyPatch]
     public class RotatingSunPlugin : BaseUnityPlugin, IModEntrypoint
     {

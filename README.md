@@ -22,6 +22,9 @@ and adding the dll to your bepinex plugins folder. This plugin is dependent on t
 
 # Changelog
 
+## v3.0.0 - 23.9.2022
+- Updated to work with TimberAPI v0.5
+
 ## v2.2.0 - 10.9.2022
 - Added Moonlight!
 - Tweaks to the timings of the Sun's angles
