@@ -9,6 +9,7 @@ using Timberborn.Localization;
 using Timberborn.MainMenuScene;
 using Timberborn.Options;
 using Timberborn.SkySystem;
+using Timberborn.TimeSystem;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -26,7 +27,7 @@ namespace SunFix
 
         private static float _transitionProgress = 0f;
         private static float _transitionTime = 0.3f; // A Tick lasts 0.3 s
-        private static float _lastTimestamp;
+        private static float _lastTimestamp = 0;
         private static float _x;
         private static float _y;
         private static Quaternion _lastRotation;
@@ -37,27 +38,84 @@ namespace SunFix
         [HarmonyPatch(typeof(Sun), nameof(Sun.RotateSunWithCamera))]
         public static bool Prefix(Sun __instance, DayStageTransition dayStageTransition)
         {
-            InitDayLengths(__instance);
-            var hoursToday = __instance._dayStageCycle._dayNightCycle.HoursPassedToday;
-            var progress = (hoursToday / _dayLength);
-
             _transitionProgress += Time.deltaTime;
-            float cappedTransitionPorgress = Math.Min(1f, _transitionProgress / _transitionTime);
-
-            // Time in DayNightCycle is calculated in ticks. Calculate new rotation angles when 
-            // a new tick is detected
-            if (_lastTimestamp != hoursToday)
+            if (_lastTimestamp != __instance._dayStageCycle._dayNightCycle.HoursPassedToday)
             {
+                _lastTimestamp = __instance._dayStageCycle._dayNightCycle.HoursPassedToday;
                 _transitionProgress = 0;
-                _lastRotation = __instance._sun.transform.localRotation;
-                _lastTimestamp = hoursToday;
-
-                SetSunXAndYCoordinates(__instance, dayStageTransition, hoursToday, progress);
             }
-            // Between Ticks, smoohtly transition between the rotation angles
-            if (cappedTransitionPorgress < 1f)
+
+            InitDayLengths(__instance);
+            var progress = (_lastTimestamp + (_transitionProgress / ((DayNightCycle)__instance._dayStageCycle._dayNightCycle)._configuredDayLengthInSeconds) * 24f) / _dayLength;
+            _lastRotation = __instance._sun.transform.localRotation;
+
+            if (progress <= 1)
             {
-                __instance._sun.transform.localRotation = Quaternion.Lerp(_lastRotation, Quaternion.Euler(_x, _y, 0), cappedTransitionPorgress);
+                if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
+                {
+                    if (progress <= 0.5)
+                    {
+                        var tempProgress = progress * 2;
+                        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(XDroughtMinAngle, 10f, 0f), Quaternion.Euler(XDroughtMaxAngle, 85f, 0), tempProgress);
+                    }
+                    else
+                    {
+                        var tempProgress = (progress - 0.5f) * 2f;
+                        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(XDroughtMaxAngle, 85f, 0f), Quaternion.Euler(XDroughtMinAngle, 170f, 0), tempProgress);
+                    }
+                }
+                else
+                {
+                    if (progress <= 0.5)
+                    {
+                        var tempProgress = progress * 2;
+                        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(XMinAngle, 10f, 0f), Quaternion.Euler(XMaxAngle, 85f, 0), tempProgress);
+                    }
+                    else
+                    {
+                        var tempProgress = (progress - 0.5f) * 2f;
+                        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(XMaxAngle, 85f, 0f), Quaternion.Euler(XMinAngle, 170f, 0), tempProgress);
+                    }
+                }
+            }
+            else
+            {
+                var nightProgress = (_lastTimestamp + ((_transitionProgress / ((DayNightCycle)__instance._dayStageCycle._dayNightCycle)._configuredDayLengthInSeconds) * 24f) - _dayLength) / _nightLength;
+                _y = Mathf.Clamp(180 - (nightProgress * 180), 10f, 170f);
+                if (dayStageTransition.CurrentDayStage == DayStage.Night)
+                {
+                    float minAngle = __instance._dayStageCycle._weatherService._droughtService.IsDrought
+                        ? XDroughtMinAngle
+                        : XMinAngle;
+                    float sunAngle = __instance._dayStageCycle._weatherService._droughtService.IsDrought
+                        ? XDroughtMaxAngle
+                        : XMaxAngle;
+
+                    if (nightProgress <= 0.1)
+                    {
+                        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(minAngle, 170f, 0f),
+                                                                                  Quaternion.Euler(MoonAngle, 170f, 0),
+                                                                                  nightProgress * 10);
+                    }
+                    else if (nightProgress >= 0.80)
+                    {
+                        if (dayStageTransition.NextDayStageIsInDrought)
+                        {
+                            minAngle = XDroughtMinAngle;
+                        }
+                        _x = Mathf.Clamp(Mathf.Lerp(1f, 0f, (nightProgress - 0.9f) * 10) * (MoonAngle * 2) + minAngle, minAngle, MoonAngle);
+                        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(MoonAngle, 10f, 0f),
+                                                                                  Quaternion.Euler(minAngle, 10f, 0),
+                                                                                  (nightProgress - 0.80f) * 10);
+                    }
+                    else
+                    {
+                        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(MoonAngle, 170f, 0f),
+                                                                                  Quaternion.Euler(MoonAngle, 10f, 0),
+                                                                                  (nightProgress - 0.1f) * 1.25f);
+                    }
+
+                }
             }
             return false;
         }
@@ -76,32 +134,65 @@ namespace SunFix
         {
             if (progress <= 1)
             {
-                if (progress <= 0.5)
+                // During day, y goes smoothly from 10 to 170
+                //_y = Mathf.Clamp((hoursToday / _dayLength) * 180, 10f, 170f);
+                //if (progress <= 0.5)
+                //{
+                //    // in the morning sun goes up, maxing at _xOffset
+                //    if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
+                //    {
+                //        _x = Mathf.Clamp(progress * (XDroughtMaxAngle * 2) + XDroughtMinAngle, XDroughtMinAngle, XDroughtMaxAngle);
+                //        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(XDroughtMinAngle, 170f, 0f), Quaternion.Euler(_x, _y, 0), progress);
+                //    }
+                //    else
+                //    {
+                //        _x = Mathf.Clamp(progress * (XMaxAngle * 2) + XMinAngle, XMinAngle, XMaxAngle);
+                //        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(XMinAngle, 170f, 0f), Quaternion.Euler(_x, _y, 0), progress);
+                //    }
+                //}
+                //else
+                //{
+                //    // in the afternoon sun goes down
+                //    if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
+                //    {
+                //        _x = Mathf.Clamp((XDroughtMaxAngle * 2) - ((progress) * (XDroughtMaxAngle * 2)), 0f, XDroughtMaxAngle);
+                //        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(XDroughtMinAngle, 170f, 0f), Quaternion.Euler(_x, _y, 0), progress);
+                //    }
+                //    else
+                //    {
+                //        _x = Mathf.Clamp((XMaxAngle * 2) - ((progress) * (XMaxAngle * 2)), 0f, XMaxAngle);
+                //        __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(XMinAngle, 170f, 0f), Quaternion.Euler(_x, _y, 0), progress);
+                //    }
+                //}
+
+
+
+                // During day, y goes smoothly from 10 to 170
+                _y = Mathf.Clamp((hoursToday / _dayLength) * 180, 10f, 170f);
+                if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
                 {
-                    // in the morning sun goes up, maxing at _xOffset
-                    if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
+                    if (progress <= 0.5)
                     {
                         _x = Mathf.Clamp(progress * (XDroughtMaxAngle * 2) + XDroughtMinAngle, XDroughtMinAngle, XDroughtMaxAngle);
                     }
                     else
                     {
-                        _x = Mathf.Clamp(progress * (XMaxAngle * 2) + XMinAngle, XMinAngle, XMaxAngle);
+                        _x = Mathf.Clamp((XDroughtMaxAngle * 2) - ((progress) * (XDroughtMaxAngle * 2)), 0f, XDroughtMaxAngle);
                     }
+                    __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(XDroughtMinAngle, 10f, 0f), Quaternion.Euler(XDroughtMaxAngle, 170f, 0), progress);
                 }
                 else
                 {
-                    // in the afternoon sun goes down
-                    if (__instance._dayStageCycle._weatherService._droughtService.IsDrought)
+                    if (progress <= 0.5)
                     {
-                        _x = Mathf.Clamp((XDroughtMaxAngle * 2) - ((progress) * (XDroughtMaxAngle * 2)), 0f, XDroughtMaxAngle);
+                        _x = Mathf.Clamp(progress * (XMaxAngle * 2) + XMinAngle, XMinAngle, XMaxAngle);
                     }
                     else
                     {
                         _x = Mathf.Clamp((XMaxAngle * 2) - ((progress) * (XMaxAngle * 2)), 0f, XMaxAngle);
                     }
+                    __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(XMinAngle, 10f, 0f), Quaternion.Euler(XMaxAngle, 170f, 0), progress);
                 }
-                // During day, y goes smoothly from 10 to 170
-                _y = Mathf.Clamp((hoursToday / _dayLength) * 180, 10f, 170f);
             }
             else
             {
@@ -112,20 +203,21 @@ namespace SunFix
                     float minAngle = __instance._dayStageCycle._weatherService._droughtService.IsDrought
                         ? XDroughtMinAngle
                         : XMinAngle;
-                    
+
                     if (nightProgress <= 0.1)
                     {
                         _x = Mathf.Clamp(Mathf.Lerp(0f, 1f, nightProgress * 10) * (MoonAngle * 2) + minAngle, 0f, MoonAngle);
                     }
                     else if (nightProgress >= 0.9)
                     {
-                        if(dayStageTransition.NextDayStageIsInDrought)
+                        if (dayStageTransition.NextDayStageIsInDrought)
                         {
                             minAngle = XDroughtMinAngle;
                         }
                         _x = Mathf.Clamp(Mathf.Lerp(1f, 0f, (nightProgress - 0.9f) * 10) * (MoonAngle * 2) + minAngle, minAngle, MoonAngle);
                     }
 
+                    __instance._sun.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(minAngle, 170f, 0f), Quaternion.Euler(_x, _y, 0), progress);
                 }
             }
         }
@@ -138,7 +230,7 @@ namespace SunFix
             }
             if (_nightLength == 0f)
             {
-                _nightLength = __instance._dayStageCycle._dayNightCycle.NighttimeLengthInHours - 2.5f;
+                _nightLength = __instance._dayStageCycle._dayNightCycle.NighttimeLengthInHours - 2f;
             }
         }
 
@@ -164,8 +256,8 @@ namespace SunFix
 
             InitDayLengths(__instance);
             var hoursToday = __instance._dayStageCycle._dayNightCycle.HoursPassedToday;
-            var nightProgress = (hoursToday - _dayLength) / _nightLength;
-            
+            var nightProgress = (hoursToday + ((_transitionProgress / ((DayNightCycle)__instance._dayStageCycle._dayNightCycle)._configuredDayLengthInSeconds) * 24f) - _dayLength) / _nightLength;
+
             SetShadowStrengthDuringNightAndSunrise(__instance, dayStageTransition, dayStageColors, dayStageColors2, transitionProgress, nightProgress);
 
             return false;
@@ -179,21 +271,26 @@ namespace SunFix
                 {
                     __instance._sun.shadowStrength = Mathf.Lerp(0f, 0.8f, (nightProgress - 0.05f) * 10);
                 }
-                else if (nightProgress >= 0.85f)
+                else if( nightProgress >= 0.9f)
                 {
-                    __instance._sun.shadowStrength = Mathf.Lerp(0.8f, 0f, (nightProgress - 0.85f) * 10);
+                    __instance._sun.shadowStrength = Mathf.Lerp(0f, 0.5f, (nightProgress - 0.9f) * 10);
                 }
+                else if (nightProgress >= 0.75f)
+                {
+                    __instance._sun.shadowStrength = Mathf.Lerp(0.8f, 0f, (nightProgress - 0.75f)  * 20);
+                }
+            }
+            else if (dayStageTransition.CurrentDayStage == DayStage.Sunrise)
+            {
+                __instance._sun.shadowStrength = Mathf.Lerp(0.5f, 1f, dayStageTransition.TransitionProgress);
+            }
+            else if (dayStageTransition.CurrentDayStage == DayStage.Sunset)
+            {
+                __instance._sun.shadowStrength = Mathf.Lerp(1f, 0f, dayStageTransition.TransitionProgress);
             }
             else
             {
-                if (dayStageTransition.CurrentDayStage == DayStage.Sunrise)
-                {
-                    __instance._sun.shadowStrength = Mathf.Lerp(0f, 1f, dayStageTransition.TransitionProgress);
-                }
-                else
-                {
-                    __instance._sun.shadowStrength = Mathf.Lerp(dayStageColors.ShadowStrength, dayStageColors2.ShadowStrength, transitionProgress);
-                }
+                __instance._sun.shadowStrength = Mathf.Lerp(dayStageColors.ShadowStrength, dayStageColors2.ShadowStrength, transitionProgress);
             }
         }
     }
