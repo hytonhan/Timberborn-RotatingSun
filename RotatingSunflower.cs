@@ -26,7 +26,7 @@ namespace SunFix
             if (this.name.Contains("Sun"))
             {
 
-                enabled = RotatingSunPlugin.RotatingSunFlowersEnabled;
+                enabled = RotatingSunPlugin.Config.RotatingSunFlowersEnabled;
             }
             else
             {

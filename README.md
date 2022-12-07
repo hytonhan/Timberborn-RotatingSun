@@ -22,6 +22,10 @@ and adding the dll to your bepinex plugins folder. This plugin is dependent on t
 
 # Changelog
 
+## v4.0.0 - 16.11.2022
+- Got rid of BepInEx
+- Changed configs to TimberAPI format
+
 ## v3.0.0 - 23.9.2022
 - Updated to work with TimberAPI v0.5
 

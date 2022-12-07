@@ -72,18 +72,18 @@ namespace SunFix.UI
             sunOptionsContent.AddPreset(factory => factory.Labels().DefaultHeader(_rotatingOptionsHeaderLoc, builder: builder => builder.SetStyle(style => { style.alignSelf = Align.Center; style.marginBottom = new Length(10, Pixel); })));
             sunOptionsContent.AddPreset(factory => factory.Toggles().Checkbox(locKey: _rotatingEnabledLoc, name: "EnableSunRotation", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
 
-            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.TemperateSunAngleLow) + "Label", text: $"{_loc.T(_rotatingTemperateLowLoc)}: {RotatingSunPlugin.TemperateSunAngleLow}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
-            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.TemperateSunAngleLow, name: nameof(RotatingSunPlugin.TemperateSunAngleLow), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
-            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.TemperateSunAngleHigh) + "Label", text: $"{_loc.T(_rotatingTemperateHighLoc)}: {RotatingSunPlugin.TemperateSunAngleHigh}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
-            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.TemperateSunAngleHigh, name: nameof(RotatingSunPlugin.TemperateSunAngleHigh), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.Config.TemperateSunAngleLow) + "Label", text: $"{_loc.T(_rotatingTemperateLowLoc)}: {RotatingSunPlugin.Config.TemperateSunAngleLow}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.Config.TemperateSunAngleLow, name: nameof(RotatingSunPlugin.Config.TemperateSunAngleLow), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.Config.TemperateSunAngleHigh) + "Label", text: $"{_loc.T(_rotatingTemperateHighLoc)}: {RotatingSunPlugin.Config.TemperateSunAngleHigh}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.Config.TemperateSunAngleHigh, name: nameof(RotatingSunPlugin.Config.TemperateSunAngleHigh), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
 
-            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.DroughtSunAngleLow) + "Label", text: $"{_loc.T(_rotatingDroughtLowLoc)}: {RotatingSunPlugin.DroughtSunAngleLow}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
-            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.DroughtSunAngleLow, name: nameof(RotatingSunPlugin.DroughtSunAngleLow), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
-            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.DroughtSunAngleHigh) + "Label", text: $"{_loc.T(_rotatingDroughtHighLoc)}: {RotatingSunPlugin.DroughtSunAngleHigh}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
-            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.DroughtSunAngleHigh, name: nameof(RotatingSunPlugin.DroughtSunAngleHigh), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.Config.DroughtSunAngleLow) + "Label", text: $"{_loc.T(_rotatingDroughtLowLoc)}: {RotatingSunPlugin.Config.DroughtSunAngleLow}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.Config.DroughtSunAngleLow, name: nameof(RotatingSunPlugin.Config.DroughtSunAngleLow), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.Config.DroughtSunAngleHigh) + "Label", text: $"{_loc.T(_rotatingDroughtHighLoc)}: {RotatingSunPlugin.Config.DroughtSunAngleHigh}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.Config.DroughtSunAngleHigh, name: nameof(RotatingSunPlugin.Config.DroughtSunAngleHigh), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
             
-            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.MoonAngle) + "Label", text: $"{_loc.T(_rotatingMoonAngleLoc)}: {RotatingSunPlugin.MoonAngle}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
-            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.MoonAngle, name: nameof(RotatingSunPlugin.MoonAngle), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Labels().GameTextBig(name: nameof(RotatingSunPlugin.Config.MoonAngle) + "Label", text: $"{_loc.T(_rotatingMoonAngleLoc)}: {RotatingSunPlugin.Config.MoonAngle}", builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
+            sunOptionsContent.AddPreset(factory => factory.Sliders().SliderIntCircle(_sunAngleLow, _sunAngleHigh, value: RotatingSunPlugin.Config.MoonAngle, name: nameof(RotatingSunPlugin.Config.MoonAngle), builder: builder => builder.SetStyle(style => style.marginBottom = new Length(10, Pixel))));
 
             sunOptionsContent.AddPreset(factory => factory.Toggles().Checkbox(locKey: _rotatingSunFlowerRotationEnabledLoc, name: "EnableSunflowerRotation"));
 
@@ -92,24 +92,24 @@ namespace SunFix.UI
             VisualElement root = boxBuilder.AddCloseButton("CloseButton").SetBoxInCenter().AddHeader(_rotatingOptionsHeaderLoc).BuildAndInitialize();
             root.Q<Button>("CloseButton").clicked += OnUICancelled;
             root.Q<Toggle>("EnableSunRotation").RegisterValueChangedCallback(ToggleSunEnabled);
-            root.Q<Toggle>("EnableSunRotation").value = RotatingSunPlugin.RotatingSunEnabled;
+            root.Q<Toggle>("EnableSunRotation").value = RotatingSunPlugin.Config.RotatingSunEnabled;
             root.Q<Toggle>("EnableSunflowerRotation").RegisterValueChangedCallback(ToggleSunflowerEnabled);
-            root.Q<Toggle>("EnableSunflowerRotation").value = RotatingSunPlugin.RotatingSunFlowersEnabled;
+            root.Q<Toggle>("EnableSunflowerRotation").value = RotatingSunPlugin.Config.RotatingSunFlowersEnabled;
 
-            var temperateLowSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.TemperateSunAngleLow)).RegisterValueChangedCallback(TemperateSunAngleLowSliderChangedCallback);
-            var temperateHighSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.TemperateSunAngleHigh)).RegisterValueChangedCallback(TemperateSunAngleHighSliderChangedCallback);
+            var temperateLowSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.Config.TemperateSunAngleLow)).RegisterValueChangedCallback(TemperateSunAngleLowSliderChangedCallback);
+            var temperateHighSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.Config.TemperateSunAngleHigh)).RegisterValueChangedCallback(TemperateSunAngleHighSliderChangedCallback);
 
-            _temperateLowLabel = root.Q<Label>(nameof(RotatingSunPlugin.TemperateSunAngleLow) + "Label");
-            _temperateHighLabel = root.Q<Label>(nameof(RotatingSunPlugin.TemperateSunAngleHigh) + "Label");
+            _temperateLowLabel = root.Q<Label>(nameof(RotatingSunPlugin.Config.TemperateSunAngleLow) + "Label");
+            _temperateHighLabel = root.Q<Label>(nameof(RotatingSunPlugin.Config.TemperateSunAngleHigh) + "Label");
 
-            var droughtLowSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.DroughtSunAngleLow)).RegisterValueChangedCallback(DroughtSunAngleLowSliderChangedCallback);
-            var droughtHighSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.DroughtSunAngleHigh)).RegisterValueChangedCallback(DroughtSunAngleHighSliderChangedCallback);
+            var droughtLowSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.Config.DroughtSunAngleLow)).RegisterValueChangedCallback(DroughtSunAngleLowSliderChangedCallback);
+            var droughtHighSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.Config.DroughtSunAngleHigh)).RegisterValueChangedCallback(DroughtSunAngleHighSliderChangedCallback);
 
-            _droughtLowLabel = root.Q<Label>(nameof(RotatingSunPlugin.DroughtSunAngleLow) + "Label");
-            _droughtHighLabel = root.Q<Label>(nameof(RotatingSunPlugin.DroughtSunAngleHigh) + "Label");
+            _droughtLowLabel = root.Q<Label>(nameof(RotatingSunPlugin.Config.DroughtSunAngleLow) + "Label");
+            _droughtHighLabel = root.Q<Label>(nameof(RotatingSunPlugin.Config.DroughtSunAngleHigh) + "Label");
 
-            var moongAngleSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.MoonAngle)).RegisterValueChangedCallback(MoongAngleSliderChangedCallback);
-            _moongAngleLabel = root.Q<Label>(nameof(RotatingSunPlugin.MoonAngle) + "Label");
+            var moongAngleSlider = root.Q<SliderInt>(nameof(RotatingSunPlugin.Config.MoonAngle)).RegisterValueChangedCallback(MoongAngleSliderChangedCallback);
+            _moongAngleLabel = root.Q<Label>(nameof(RotatingSunPlugin.Config.MoonAngle) + "Label");
 
             return root;
         }
@@ -120,22 +120,7 @@ namespace SunFix.UI
         /// <param name="changeEvent"></param>
         private void ToggleSunEnabled(ChangeEvent<bool> changeEvent)
         {
-            RotatingSunPlugin.RotatingSunEnabled = changeEvent.newValue;
-
-            if(!RotatingSunPlugin.ConfigFile.TryGetEntry<bool>("General", nameof(RotatingSunPlugin.RotatingSunEnabled), out var setting))
-            {
-                RotatingSunPlugin.Log.LogInfo($"Config \"{nameof(RotatingSunPlugin.RotatingSunEnabled)}\" didn't exist. Creating.");
-                RotatingSunPlugin.RotatingSunEnabled = 
-                    RotatingSunPlugin.ConfigFile.Bind(
-                        "General",
-                        nameof(RotatingSunPlugin.RotatingSunEnabled),
-                        true,
-                        "Enable the Sun to rotate around the world instead of being tied to player camera.").Value;
-
-            }
-            setting.Value = changeEvent.newValue;
-            RotatingSunPlugin.ConfigFile.Save();
-
+            RotatingSunPlugin.Config.RotatingSunEnabled = changeEvent.newValue;
             RotatingSunPlugin.PatchSunRotation();
         }
 
@@ -145,137 +130,42 @@ namespace SunFix.UI
         /// <param name="changeEvent"></param>
         private void ToggleSunflowerEnabled(ChangeEvent<bool> changeEvent)
         {
-            RotatingSunPlugin.RotatingSunFlowersEnabled = changeEvent.newValue;
-
-            if(!RotatingSunPlugin.ConfigFile.TryGetEntry<bool>("General", nameof(RotatingSunPlugin.RotatingSunFlowersEnabled), out var setting))
-            {
-                RotatingSunPlugin.Log.LogInfo($"Config \"{nameof(RotatingSunPlugin.RotatingSunFlowersEnabled)}\" didn't exist. Creating.");
-                RotatingSunPlugin.RotatingSunFlowersEnabled = 
-                    RotatingSunPlugin.ConfigFile.Bind(
-                        "General",
-                        nameof(RotatingSunPlugin.RotatingSunFlowersEnabled),
-                        false,
-                        "Enable Sunflowers to rotate to face the Sun.").Value;
-
-            }
-            setting.Value = changeEvent.newValue;
-            RotatingSunPlugin.ConfigFile.Save();
-
+            RotatingSunPlugin.Config.RotatingSunFlowersEnabled = changeEvent.newValue;
             RotatingSunPlugin.SetSunflowerRotation();
         }
 
         private void TemperateSunAngleLowSliderChangedCallback(ChangeEvent<int> changeEvent)
         {
-            RotatingSunPlugin.TemperateSunAngleLow = changeEvent.newValue;
-
-            if (!RotatingSunPlugin.ConfigFile.TryGetEntry<int>("General", nameof(RotatingSunPlugin.TemperateSunAngleLow), out var setting))
-            {
-                RotatingSunPlugin.Log.LogInfo($"Config \"{nameof(RotatingSunPlugin.TemperateSunAngleLow)}\" didn't exist. Creating.");
-                RotatingSunPlugin.TemperateSunAngleLow =
-                    RotatingSunPlugin.ConfigFile.Bind(
-                        "General",
-                        nameof(RotatingSunPlugin.TemperateSunAngleLow),
-                        _sunAngleMinDefault,
-                        "Sun starting angle during Temperate weather.").Value;
-
-            }
-            setting.Value = changeEvent.newValue;
-            RotatingSunPlugin.TemperateSunAngleLow = changeEvent.newValue;
-            RotatingSunPlugin.ConfigFile.Save();
-
+            RotatingSunPlugin.Config.TemperateSunAngleLow = changeEvent.newValue;
             Patches.XMinAngle = changeEvent.newValue;
             _temperateLowLabel.text = $"{_loc.T(_rotatingTemperateLowLoc)}: {changeEvent.newValue}";
         }
 
         private void TemperateSunAngleHighSliderChangedCallback(ChangeEvent<int> changeEvent)
         {
-            RotatingSunPlugin.TemperateSunAngleHigh = changeEvent.newValue;
-
-            if (!RotatingSunPlugin.ConfigFile.TryGetEntry<int>("General", nameof(RotatingSunPlugin.TemperateSunAngleHigh), out var setting))
-            {
-                RotatingSunPlugin.Log.LogInfo($"Config \"{nameof(RotatingSunPlugin.TemperateSunAngleHigh)}\" didn't exist. Creating.");
-                RotatingSunPlugin.TemperateSunAngleHigh =
-                    RotatingSunPlugin.ConfigFile.Bind(
-                        "General",
-                        nameof(RotatingSunPlugin.TemperateSunAngleHigh),
-                        _sunAngleMaxDefaultTemperate,
-                        "Sun High angle during Temperate weather.").Value;
-
-            }
-            setting.Value = changeEvent.newValue;
-            RotatingSunPlugin.ConfigFile.Save();
-
+            RotatingSunPlugin.Config.TemperateSunAngleHigh = changeEvent.newValue;
             Patches.XMaxAngle = changeEvent.newValue;
-            RotatingSunPlugin.TemperateSunAngleHigh = changeEvent.newValue;
             _temperateHighLabel.text = $"{_loc.T(_rotatingTemperateHighLoc)}: {changeEvent.newValue}";
         }
 
         private void DroughtSunAngleLowSliderChangedCallback(ChangeEvent<int> changeEvent)
         {
-            RotatingSunPlugin.DroughtSunAngleLow = changeEvent.newValue;
-
-            if (!RotatingSunPlugin.ConfigFile.TryGetEntry<int>("General", nameof(RotatingSunPlugin.DroughtSunAngleLow), out var setting))
-            {
-                RotatingSunPlugin.Log.LogInfo($"Config \"{nameof(RotatingSunPlugin.DroughtSunAngleLow)}\" didn't exist. Creating.");
-                RotatingSunPlugin.DroughtSunAngleLow =
-                    RotatingSunPlugin.ConfigFile.Bind(
-                        "General",
-                        nameof(RotatingSunPlugin.DroughtSunAngleLow),
-                        _sunAngleMinDefault,
-                        "Sun starting angle during Drought.").Value;
-
-            }
-            setting.Value = changeEvent.newValue;
-            RotatingSunPlugin.DroughtSunAngleLow = changeEvent.newValue;
-            RotatingSunPlugin.ConfigFile.Save();
-
+            RotatingSunPlugin.Config.DroughtSunAngleLow = changeEvent.newValue;
             Patches.XDroughtMinAngle = changeEvent.newValue;
             _droughtLowLabel.text = $"{_loc.T(_rotatingDroughtLowLoc)}: {changeEvent.newValue}";
         }
 
         private void DroughtSunAngleHighSliderChangedCallback(ChangeEvent<int> changeEvent)
         {
-            RotatingSunPlugin.TemperateSunAngleHigh = changeEvent.newValue;
-
-            if (!RotatingSunPlugin.ConfigFile.TryGetEntry<int>("General", nameof(RotatingSunPlugin.TemperateSunAngleHigh), out var setting))
-            {
-                RotatingSunPlugin.Log.LogInfo($"Config \"{nameof(RotatingSunPlugin.TemperateSunAngleHigh)}\" didn't exist. Creating.");
-                RotatingSunPlugin.TemperateSunAngleHigh =
-                    RotatingSunPlugin.ConfigFile.Bind(
-                        "General",
-                        nameof(RotatingSunPlugin.TemperateSunAngleHigh),
-                        _sunAngleMaxDefaultTemperate,
-                        "Sun High angle during Drought").Value;
-
-            }
-            setting.Value = changeEvent.newValue;
-            RotatingSunPlugin.ConfigFile.Save();
-
+            RotatingSunPlugin.Config.TemperateSunAngleHigh = changeEvent.newValue;
             Patches.XDroughtMaxAngle = changeEvent.newValue;
-            RotatingSunPlugin.TemperateSunAngleHigh = changeEvent.newValue;
             _droughtHighLabel.text = $"{_loc.T(_rotatingDroughtHighLoc)}: {changeEvent.newValue}";
         }
 
         private void MoongAngleSliderChangedCallback(ChangeEvent<int> changeEvent)
         {
-            RotatingSunPlugin.MoonAngle = changeEvent.newValue;
-
-            if (!RotatingSunPlugin.ConfigFile.TryGetEntry<int>("General", nameof(RotatingSunPlugin.MoonAngle), out var setting))
-            {
-                RotatingSunPlugin.Log.LogInfo($"Config \"{nameof(RotatingSunPlugin.MoonAngle)}\" didn't exist. Creating.");
-                RotatingSunPlugin.MoonAngle =
-                    RotatingSunPlugin.ConfigFile.Bind(
-                        "General",
-                        nameof(RotatingSunPlugin.MoonAngle),
-                        _moonAngleDefault,
-                        "The Moon's angle.").Value;
-
-            }
-            setting.Value = changeEvent.newValue;
-            RotatingSunPlugin.ConfigFile.Save();
-
+            RotatingSunPlugin.Config.MoonAngle = changeEvent.newValue;
             Patches.MoonAngle = changeEvent.newValue;
-            RotatingSunPlugin.MoonAngle = changeEvent.newValue;
             _moongAngleLabel.text = $"{_loc.T(_rotatingMoonAngleLoc)}: {changeEvent.newValue}";
         }
 
