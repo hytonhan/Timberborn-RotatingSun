@@ -22,6 +22,9 @@ and adding the dll to your bepinex plugins folder. This plugin is dependent on t
 
 # Changelog
 
+## v5.0.0 - 7.12.2022
+- Rewrote Sun logic so that it should be much smoother
+
 ## v4.0.0 - 16.11.2022
 - Got rid of BepInEx
 - Changed configs to TimberAPI format
