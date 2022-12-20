@@ -7,6 +7,9 @@ using TimberApi.ModSystem;
 using TimberApi.ConsoleSystem;
 using Timberborn.SkySystem;
 using UnityEngine;
+using TimberApi.ConfigSystem;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace SunFix
 {
@@ -15,6 +18,7 @@ namespace SunFix
     {
         private static Harmony _harmony;
         public static RotatingSunConfig Config;
+        private static IMod _mod;
 
         public static IConsoleWriter Log;
 
@@ -22,9 +26,13 @@ namespace SunFix
         {
             Config = mod.Configs.Get<RotatingSunConfig>();
 
+            _mod = mod;
+
             _harmony = new Harmony("hytone.plugins.rotatingsun");
             _harmony.PatchAll();
             PatchSunRotation();
+
+
 
             Log = consoleWriter;
         }
@@ -85,6 +93,15 @@ namespace SunFix
                 {
                     sunflower.enabled = false;
                 }
+            }
+        }
+
+        public static void SaveConfig()
+        {
+            string configPath = Path.Combine(_mod.DirectoryPath, "configs", $"{Config.ConfigFileName}.json");
+            if (File.Exists(configPath))
+            {
+                File.WriteAllText(configPath, JsonConvert.SerializeObject(Config));
             }
         }
     }

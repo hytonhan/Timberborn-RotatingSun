@@ -122,6 +122,7 @@ namespace SunFix.UI
         {
             RotatingSunPlugin.Config.RotatingSunEnabled = changeEvent.newValue;
             RotatingSunPlugin.PatchSunRotation();
+            RotatingSunPlugin.SaveConfig();
         }
 
         /// <summary>
@@ -132,6 +133,7 @@ namespace SunFix.UI
         {
             RotatingSunPlugin.Config.RotatingSunFlowersEnabled = changeEvent.newValue;
             RotatingSunPlugin.SetSunflowerRotation();
+            RotatingSunPlugin.SaveConfig();
         }
 
         private void TemperateSunAngleLowSliderChangedCallback(ChangeEvent<int> changeEvent)
@@ -139,6 +141,7 @@ namespace SunFix.UI
             RotatingSunPlugin.Config.TemperateSunAngleLow = changeEvent.newValue;
             Patches.XMinAngle = changeEvent.newValue;
             _temperateLowLabel.text = $"{_loc.T(_rotatingTemperateLowLoc)}: {changeEvent.newValue}";
+            RotatingSunPlugin.SaveConfig();
         }
 
         private void TemperateSunAngleHighSliderChangedCallback(ChangeEvent<int> changeEvent)
@@ -146,6 +149,7 @@ namespace SunFix.UI
             RotatingSunPlugin.Config.TemperateSunAngleHigh = changeEvent.newValue;
             Patches.XMaxAngle = changeEvent.newValue;
             _temperateHighLabel.text = $"{_loc.T(_rotatingTemperateHighLoc)}: {changeEvent.newValue}";
+            RotatingSunPlugin.SaveConfig();
         }
 
         private void DroughtSunAngleLowSliderChangedCallback(ChangeEvent<int> changeEvent)
@@ -153,6 +157,7 @@ namespace SunFix.UI
             RotatingSunPlugin.Config.DroughtSunAngleLow = changeEvent.newValue;
             Patches.XDroughtMinAngle = changeEvent.newValue;
             _droughtLowLabel.text = $"{_loc.T(_rotatingDroughtLowLoc)}: {changeEvent.newValue}";
+            RotatingSunPlugin.SaveConfig();
         }
 
         private void DroughtSunAngleHighSliderChangedCallback(ChangeEvent<int> changeEvent)
@@ -160,6 +165,7 @@ namespace SunFix.UI
             RotatingSunPlugin.Config.TemperateSunAngleHigh = changeEvent.newValue;
             Patches.XDroughtMaxAngle = changeEvent.newValue;
             _droughtHighLabel.text = $"{_loc.T(_rotatingDroughtHighLoc)}: {changeEvent.newValue}";
+            RotatingSunPlugin.SaveConfig();
         }
 
         private void MoongAngleSliderChangedCallback(ChangeEvent<int> changeEvent)
@@ -167,6 +173,7 @@ namespace SunFix.UI
             RotatingSunPlugin.Config.MoonAngle = changeEvent.newValue;
             Patches.MoonAngle = changeEvent.newValue;
             _moongAngleLabel.text = $"{_loc.T(_rotatingMoonAngleLoc)}: {changeEvent.newValue}";
+            RotatingSunPlugin.SaveConfig();
         }
 
         public bool OnUIConfirmed()

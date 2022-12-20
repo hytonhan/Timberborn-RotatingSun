@@ -22,6 +22,9 @@ and adding the dll to your bepinex plugins folder. This plugin is dependent on t
 
 # Changelog
 
+## v5.1.0 - 17.12.2022
+- Fixed configs not saving when changed from in-game menu
+
 ## v5.0.0 - 7.12.2022
 - Rewrote Sun logic so that it should be much smoother
 
