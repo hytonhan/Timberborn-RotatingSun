@@ -8,6 +8,7 @@ namespace SunFix
     public class RotatingSunflower : MonoBehaviour
     {
         private Sun _sun;
+        private RotatingSunConfig _config;
 
         private float _initialXPos;
         private float _initialYPos;
@@ -16,9 +17,12 @@ namespace SunFix
         private float _r;
 
         [Inject]
-        public void InjectDependencies(Sun sun)
+        public void InjectDependencies(
+            Sun sun,
+            RotatingSunConfig config)
         {
             _sun = sun;
+            _config = config;
         }
 
         public void Awake()
@@ -26,7 +30,7 @@ namespace SunFix
             if (this.name.Contains("Sun"))
             {
 
-                enabled = RotatingSunPlugin.Config.RotatingSunFlowersEnabled;
+                enabled = _config.RotatingSunFlowersEnabled.Value;
             }
             else
             {
@@ -42,18 +46,12 @@ namespace SunFix
             _initialZPos = gameObject.transform.localPosition.z - 0.5f + (_r * Mathf.Cos((gameObject.transform.localEulerAngles.y + 45) * Mathf.Deg2Rad));
         }
 
-        /// <summary>
-        /// When Sunflowers get disabled, reset their position and rotation
-        /// </summary>
         public void OnDisable()
         {
             gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
             gameObject.transform.localPosition = new Vector3(_initialXPos, _initialYPos, _initialZPos);
         }
 
-        /// <summary>
-        /// Rotate the entity based on the Sun's y-angle. Also fix the position caused by rotation.
-        /// </summary>
         public void Update()
         {
             if (enabled)

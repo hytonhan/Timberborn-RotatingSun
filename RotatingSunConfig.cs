@@ -1,21 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TimberApi.ConfigSystem;
+﻿
+using ModSettings.Core;
+using Timberborn.Modding;
+using Timberborn.SettingsSystem;
 
 namespace SunFix
 {
-    public class RotatingSunConfig : IConfig
+    public class RotatingSunConfig : ModSettingsOwner
     {
-        public string ConfigFileName => "RotatingSun";
 
-        public bool RotatingSunEnabled = true;
-        public bool RotatingSunFlowersEnabled = false;
+        public RotatingSunConfig(
+            ISettings settings, 
+            ModSettingsOwnerRegistry modSettingsOwnerRegistry, 
+            ModRepository modRepository) 
+            : base(settings, modSettingsOwnerRegistry, modRepository)
+        {
+        }
 
-        public int TemperateSunAngleLow = 5;
-        public int TemperateSunAngleHigh = 50;
-        public int DroughtSunAngleLow = 5;
-        public int DroughtSunAngleHigh = 80;
-        public int MoonAngle = 50;
+        public ModSetting<bool> RotatingSunEnabled {get; } = 
+            new (true, ModSettingDescriptor.CreateLocalized("rotatingsun.enablesun"));
+
+        public ModSetting<bool> RotatingSunFlowersEnabled {get; } = 
+            new (false, ModSettingDescriptor.CreateLocalized("rotatingsun.enablerotatingsunflowers"));
+
+        public ModSetting<int> TemperateSunAngleLow {get; } = 
+            new (5, ModSettingDescriptor.CreateLocalized("rotatingsun.SunAngleLowTemperate"));
+
+        public ModSetting<int> TemperateSunAngleHigh {get; } = 
+            new (50, ModSettingDescriptor.CreateLocalized("rotatingsun.SunAngleHighTemperate"));
+
+        public ModSetting<int> DroughtSunAngleLow {get; } = 
+            new (5, ModSettingDescriptor.CreateLocalized("rotatingsun.SunAngleLowDrought"));
+
+        public ModSetting<int> DroughtSunAngleHigh {get; } = 
+            new (80, ModSettingDescriptor.CreateLocalized("rotatingsun.SunAngleHighDrought"));
+
+        public ModSetting<int> BadtideSunAngleLow {get; } = 
+            new (5, ModSettingDescriptor.CreateLocalized("rotatingsun.SunAngleLowBadtide"));
+
+        public ModSetting<int> BadtideSunAngleHigh {get; } = 
+            new (80, ModSettingDescriptor.CreateLocalized("rotatingsun.SunAngleHighBadtide"));
+
+        public ModSetting<int> MoonAngle {get; } = 
+            new (50, ModSettingDescriptor.CreateLocalized("rotatingsun.MoonAngle"));
+
+        public override string HeaderLocKey => "menu.rotatingsun";
+        
+        protected override string ModId => "hytone.rotatingsun";
+
     }
 }

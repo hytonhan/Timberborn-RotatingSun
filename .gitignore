@@ -355,3 +355,8 @@ MigrationBackup/
 /package/RotatingSun.zip.old
 /package/RotatingSun_5.1.0_modio.zip
 /package/RotatingSun_5.1.0_thunderstore.zip
+Scripts/
+Managed
+Managed/
+Scripts
+TimberAPI/

@@ -4,14 +4,22 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	  <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="copy $(ProjectDir)README.md $(ProjectDir)package&#xD;&#xA;copy $(OutDir)$(AssemblyName).dll $(ProjectDir)\package\RotatingSun\plugins" />
-  </Target>
+  </Target>-->
 
   <ItemGroup>
-    <PackageReference Include="TimberApi" Version="0.5.1" />
+    <PackageReference Include="Lib.Harmony" Version="2.3.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Managed\Timberborn*.dll" />
+    <Reference Include="Managed\UnityEngine*.dll" />
+    <Reference Include="Managed\Bindito*.dll" />
+    <Reference Include="TimberAPI\core\*.dll" />
+    <Reference Include="Scripts\*dll" />
+  </ItemGroup>
 </Project>
