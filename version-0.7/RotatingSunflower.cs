@@ -57,12 +57,12 @@ namespace SunFix
             if (enabled)
             {
                 gameObject.transform.localRotation = Quaternion.Euler(gameObject.transform.localEulerAngles.x,
-                                                                      _sun.transform.localEulerAngles.y,
+                                                                      _sun.Transform.localEulerAngles.y,
                                                                       gameObject.transform.localEulerAngles.z);
 
-                gameObject.transform.localPosition = new Vector3(_initialXPos + 0.5f - (_r * Mathf.Sin((_sun.transform.localEulerAngles.y + 45) * Mathf.Deg2Rad)),
+                gameObject.transform.localPosition = new Vector3(_initialXPos + 0.5f - (_r * Mathf.Sin((_sun.Transform.localEulerAngles.y + 45) * Mathf.Deg2Rad)),
                                                                  _initialYPos,
-                                                                 _initialZPos + 0.5f - (_r * Mathf.Cos((_sun.transform.localEulerAngles.y + 45) * Mathf.Deg2Rad)));
+                                                                 _initialZPos + 0.5f - (_r * Mathf.Cos((_sun.Transform.localEulerAngles.y + 45) * Mathf.Deg2Rad)));
             }
         }
     }

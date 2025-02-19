@@ -1,0 +1,12 @@
+ID,Text,Comment
+menu.rotatingsun,"Настройки Солнца",Rotating Sun Options
+rotatingsun.optionsheader,"Настройки Движения Солнца",Rotating Sun Options
+rotatingsun.enablesun,"Включить независимое движение солнца",Enable Sun Rotation
+rotatingsun.enablerotatingsunflowers,"Включить следование подсолнухов за солнцем",Enable Sunflower rotation
+rotatingsun.SunAngleTemperateHeader,"Высота солнца над горизонтом в умеренный сезон (угол в гр.)",Sun Angle During Temperate Weather
+rotatingsun.SunAngleDroughtHeader,"Высота солнца над горизонтом в засушливый сезон (угол в гр.)",Sun Angle During Drought
+rotatingsun.SunAngleLowTemperate,"Умеренный сезон,мин. высота солнца (угол в градусах)",Temperate Sun Angle Low
+rotatingsun.SunAngleHighTemperate,"Умеренный сезон,макс. высота солнца (угол в градусах)",Temperate Sun Angle High
+rotatingsun.SunAngleLowDrought,"Засуха,мин. высота солнца (угол в градусах)",Drought Sun Angle Low
+rotatingsun.SunAngleHighDrought,"Засуха,макс. высота солнца (угол в градусах)",Drought Sun Angle High
+rotatingsun.MoonAngle,"Высота луны (угол в градусах)" ,"Moon's angle"

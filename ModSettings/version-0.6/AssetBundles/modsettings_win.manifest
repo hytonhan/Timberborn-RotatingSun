@@ -1,0 +1,120 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.16f1
+CRC: 2001554178
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6b370bcdde04a1abf7cfc0b6620c34b5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c32342e77871cabe1679cea002aa7c5d
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 5b3ba9b19ec38fc0bb2131670ac85de8
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11995, guid: 0000000000000000e000000000000000, type: 0}
+- Class: 114
+  Script: {fileID: 11998, guid: 0000000000000000e000000000000000, type: 0}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: ModSettings.CoreUI
+  ClassName: ModSettings.CoreUI.NineSliceFloatField/UxmlSerializedData
+- AssemblyName: Timberborn.CoreUI
+  ClassName: Timberborn.CoreUI.LocalizableButton/UxmlSerializedData
+- AssemblyName: Timberborn.CoreUI
+  ClassName: Timberborn.CoreUI.LocalizableLabel/UxmlSerializedData
+- AssemblyName: Timberborn.CoreUI
+  ClassName: Timberborn.CoreUI.NineSliceButton/UxmlSerializedData
+- AssemblyName: Timberborn.CoreUI
+  ClassName: Timberborn.CoreUI.NineSliceIntegerField/UxmlSerializedData
+- AssemblyName: Timberborn.CoreUI
+  ClassName: Timberborn.CoreUI.NineSliceTextField/UxmlSerializedData
+- AssemblyName: Timberborn.CoreUI
+  ClassName: Timberborn.CoreUI.NineSliceVisualElement/UxmlSerializedData
+- AssemblyName: Timberborn.DropdownSystem
+  ClassName: Timberborn.DropdownSystem.Dropdown/UxmlSerializedData
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Button/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Button/UxmlSerializedData
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Image/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Image/UxmlSerializedData
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Label/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Label/UxmlSerializedData
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.ScrollView/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.ScrollView/UxmlSerializedData
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Slider/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Slider/UxmlSerializedData
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.SliderInt/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.SliderInt/UxmlSerializedData
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleComplexSelector
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleProperty
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleRule
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleSelector
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleSelectorPart
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleSheets.Dimension
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.StyleValueHandle
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.TemplateAsset
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.TemplateContainer/UxmlSerializedData
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Toggle/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.Toggle/UxmlSerializedData
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.UxmlNamespaceDefinition
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.UxmlRootElementFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.VisualElement/UxmlFactory
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.VisualElement/UxmlSerializedData
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.VisualElementAsset
+- AssemblyName: UnityEngine.UIElementsModule
+  ClassName: UnityEngine.UIElements.VisualTreeAsset/UsingEntry
+Assets:
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/ModSettingDescriptor.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/StringModSettingElement.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/SliderIntModSettingElement.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/ColorModSettingElement.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/ModSettingsBox.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Images/ModSettings/alpha-background.png
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/LongStringModSettingElement.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/ModSettingsStyle.uss
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/IntModSettingElement.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Images/ModSettings/hue-picker.png
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Images/ModSettings/sv-picker.png
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/BoolModSettingElement.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/ModSettingsButton.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/ColorPicker.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/ModSettingsHeader.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/ModManagerButton.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/DropdownModSettingElement.uxml
+- Assets/Mods/ModSettings/AssetBundles/Resources/UI/Views/ModSettings/FloatModSettingElement.uxml
+Dependencies: []

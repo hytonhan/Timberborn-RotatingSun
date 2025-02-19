@@ -1,0 +1,8 @@
+{
+  "Name": "RotatingSun",
+  "Version": "6.0.2",
+  "UniqueId": "hytone.rotatingsun",
+  "MinimumApiVersion": "0.7.0",
+  "MinimumGameVersion": "0.6.8",
+  "EntryDll": "SunFix.dll"
+}

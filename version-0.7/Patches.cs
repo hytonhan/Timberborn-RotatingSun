@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using TimberApi.DependencyContainerSystem;
+
 using Timberborn.HazardousWeatherSystem;
 using Timberborn.SkySystem;
 using Timberborn.TimeSystem;
@@ -186,6 +187,7 @@ namespace SunFix
 
                 }
             }
+            Console.WriteLine($"_light.transform.localRotation: {_light.transform.localRotation}");
             return false;
         }
 
@@ -206,6 +208,7 @@ namespace SunFix
         [HarmonyPatch(typeof(Sun), "UpdateColors", new Type[] { typeof(DayStageTransition) })]
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase original) 
         {
+            Console.WriteLine("Transpiling");
             var shadowMethod = typeof(Patches).GetMethod("SetShadowStrengthDuringNightAndSunrise", BindingFlags.Static | BindingFlags.NonPublic);
             var intensitySetter= typeof(Light).GetProperty("intensity", BindingFlags.Public | BindingFlags.Instance)
                                               .GetAccessors()[0];
@@ -263,36 +266,39 @@ namespace SunFix
             float hoursToday)
         {
             var nightProgress = (hoursToday - _dayLength) / _nightLength;
+            float returnValue;
             if (currentDayStage == DayStage.Night)
             {
                 if (nightProgress <= 0.15f)
                 {
-                    return Mathf.Lerp(0f, 0.8f, (nightProgress - 0.05f) * 10);
+                    returnValue = Mathf.Lerp(0f, 0.8f, (nightProgress - 0.05f) * 10);
                 }
                 else if( nightProgress >= 0.9f)
                 {
-                    return Mathf.Lerp(0f, 0.5f, (nightProgress - 0.9f) * 10);
+                    returnValue = Mathf.Lerp(0f, 0.5f, (nightProgress - 0.9f) * 10);
                 }
                 else if (nightProgress >= 0.75f)
                 {
-                    return Mathf.Lerp(0.8f, 0f, (nightProgress - 0.75f)  * 20);
+                    returnValue = Mathf.Lerp(0.8f, 0f, (nightProgress - 0.75f)  * 20);
                 }
                 else {
-                    return 0.8f;
+                    returnValue = 0.8f;
                 }
             }
             else if (currentDayStage == DayStage.Sunrise)
             {
-                return Mathf.Lerp(0.5f, 1f, transitionProgress);
+                returnValue = Mathf.Lerp(0.5f, 1f, transitionProgress);
             }
             else if (currentDayStage == DayStage.Sunset)
             {
-                return Mathf.Lerp(1f, 0f, transitionProgress);
+                returnValue = Mathf.Lerp(1f, 0f, transitionProgress);
             }
             else
             {
-                return 1f;
+                returnValue = 1f;
             }
+            Console.WriteLine($"shadow: {returnValue}");
+            return returnValue;
         }
     }
 }

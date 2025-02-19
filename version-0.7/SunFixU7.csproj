@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	  <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="cp $(ProjectDir)bin/Debug/netstandard2.1/SunFixU7.dll /home/hannuh/.steam/steam/steamapps/compatdata/1062090/pfx/drive_c/users/steamuser/Documents/Timberborn/Mods/RotatingSun/version-0.7" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="..\Managed\Timberborn*.dll" />
+    <Reference Include="..\Managed\UnityEngine*.dll" />
+    <Reference Include="..\Managed\Bindito*.dll" />
+    <Reference Include="..\TimberAPI\version-0.7\core\*.dll" />
+    <Reference Include="..\ModSettings\version-0.7\Scripts\*.dll" />
+  </ItemGroup>
+</Project>
