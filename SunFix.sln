@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SunFixU6", "version-0.6\SunFix.csproj", "{0D4D0C5C-D1AE-46D8-8B31-8B84ADE0C975}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunFixU7", "version-0.7\SunFixU7.csproj", "{3A606B79-7421-478A-A4CA-4354E314F29C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunFixU1_0", "version-0.7\SunFixU1_0.csproj", "{3A606B79-7421-478A-A4CA-4354E314F29C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

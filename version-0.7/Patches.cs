@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using TimberApi.DependencyContainerSystem;
-
+using Bindito.Core;
 using Timberborn.HazardousWeatherSystem;
 using Timberborn.SkySystem;
 using Timberborn.SteamWorkshop;
@@ -14,13 +13,13 @@ using Timberborn.TimeSystem;
 using Timberborn.WeatherSystem;
 using UnityEngine;
 using Steamworks;
+using Timberborn.BaseComponentSystem;
 
 namespace SunFix
 {
     [HarmonyPatch]
-    public class Patches
+    public class Patches : BaseComponent
     {
-
         public static bool SunEnabled = true;
         public static float XMinAngle = 5f;
         public static float XMaxAngle = 50f;
@@ -49,19 +48,22 @@ namespace SunFix
         private static Light _light;
         private static WeatherService _weatherService;
         private static HazardousWeatherService _hazardousWeatherService;
+        
+        [Inject]
+        public void InjectDependencies(
+            DroughtWeather droughtWeather,
+            BadtideWeather badtideWeather,
+            RotatingSunConfig config)
+        {
+            Console.WriteLine("inject");
+            _droughtWeather = droughtWeather;
+            _badtideWeather = badtideWeather;
+            _config = config;
+        }
 
         [HarmonyPatch(typeof(Sun), "UpdateRotation")]
         public static bool Prefix(Sun __instance, DayStageTransition dayStageTransition)
         {
-            if (_droughtWeather == null) {
-                _droughtWeather = DependencyContainer.GetInstance<DroughtWeather>();
-            }
-            if (_badtideWeather == null) {
-                _badtideWeather = DependencyContainer.GetInstance<BadtideWeather>();
-            }
-            if (_config == null) {
-                _config = DependencyContainer.GetInstance<RotatingSunConfig>();
-            }
             SunEnabled = _config.RotatingSunEnabled.Value;
             XMinAngle = _config.TemperateSunAngleLow.Value;
             XMaxAngle = _config.TemperateSunAngleHigh.Value;

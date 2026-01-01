@@ -5,10 +5,11 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	  <LangVersion>9.0</LangVersion>
+	  <RootNamespace>SunFixU7</RootNamespace>
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cp $(ProjectDir)bin/Debug/netstandard2.1/SunFixU7.dll /home/hannuh/.steam/steam/steamapps/compatdata/1062090/pfx/drive_c/users/steamuser/Documents/Timberborn/Mods/RotatingSun/version-0.7" />
+    <Exec Command="cp $(ProjectDir)bin/Debug/netstandard2.1/SunFixU1_0.dll /home/hannuh/.steam/steam/steamapps/compatdata/1062090/pfx/drive_c/users/steamuser/Documents/Timberborn/Mods/RotatingSun/version-1.0" />
   </Target>
 
   <ItemGroup>
@@ -21,7 +22,6 @@
     <Reference Include="..\Managed\System.Collections.Immutable.dll" />
     <Reference Include="..\Managed\UnityEngine*.dll" />
     <Reference Include="..\Managed\Bindito*.dll" />
-    <Reference Include="..\TimberAPI\version-0.7\core\*.dll" />
-    <Reference Include="..\ModSettings\version-0.7\Scripts\*.dll" />
+    <Reference Include="..\ModSettings\version-1.0\Scripts\*.dll" />
   </ItemGroup>
 </Project>

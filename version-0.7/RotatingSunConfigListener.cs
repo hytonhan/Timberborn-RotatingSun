@@ -1,5 +1,3 @@
-
-using TimberApi.DependencyContainerSystem;
 using Timberborn.SingletonSystem;
 
 namespace SunFix

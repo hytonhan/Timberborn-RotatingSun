@@ -1,10 +1,10 @@
 ﻿using Bindito.Core;
 using Timberborn.Fields;
+using Timberborn.TemplateInstantiation;
 using Timberborn.TemplateSystem;
 
 namespace SunFix
 {  
-    [Context("MainMenu")]
     [Context("Game")]
     [Context("MapEditor")]
     public class RotatingSunConfigurator : IConfigurator
@@ -13,6 +13,7 @@ namespace SunFix
         {
             containerDefinition.MultiBind<TemplateModule>().ToProvider(ProvideTemplateModule).AsSingleton();
             containerDefinition.Bind<RotatingSunConfig>().AsSingleton();
+            containerDefinition.Bind<Patches>().AsSingleton();
         }
 
         private static TemplateModule ProvideTemplateModule()
@@ -30,6 +31,7 @@ namespace SunFix
         public void Configure(IContainerDefinition containerDefinition)
         {
             containerDefinition.Bind<RotatingSunConfigListener>().AsSingleton();
+            containerDefinition.Bind<RotatingSunConfig>().AsSingleton();
         }
 
     }
