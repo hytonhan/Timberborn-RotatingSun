@@ -8,9 +8,12 @@ using TimberApi.DependencyContainerSystem;
 
 using Timberborn.HazardousWeatherSystem;
 using Timberborn.SkySystem;
+using Timberborn.SteamWorkshop;
+using Timberborn.SteamWorkshopUI;
 using Timberborn.TimeSystem;
 using Timberborn.WeatherSystem;
 using UnityEngine;
+using Steamworks;
 
 namespace SunFix
 {
@@ -47,7 +50,7 @@ namespace SunFix
         private static WeatherService _weatherService;
         private static HazardousWeatherService _hazardousWeatherService;
 
-        [HarmonyPatch(typeof(Sun), "RotateSunWithCamera")]
+        [HarmonyPatch(typeof(Sun), "UpdateRotation")]
         public static bool Prefix(Sun __instance, DayStageTransition dayStageTransition)
         {
             if (_droughtWeather == null) {
@@ -58,16 +61,16 @@ namespace SunFix
             }
             if (_config == null) {
                 _config = DependencyContainer.GetInstance<RotatingSunConfig>();
-                SunEnabled = _config.RotatingSunEnabled.Value;
-                XMinAngle = _config.TemperateSunAngleLow.Value;
-                XMaxAngle = _config.TemperateSunAngleHigh.Value;
-                XDroughtMinAngle = _config.DroughtSunAngleLow.Value;
-                XDroughtMaxAngle = _config.DroughtSunAngleHigh.Value;
-                XBadtideMinAngle = _config.BadtideSunAngleLow.Value;
-                XBadtideMaxAngle = _config.BadtideSunAngleHigh.Value;
-                MoonAngle = _config.MoonAngle.Value;
             }
-            if (!SunEnabled) {
+            SunEnabled = _config.RotatingSunEnabled.Value;
+            XMinAngle = _config.TemperateSunAngleLow.Value;
+            XMaxAngle = _config.TemperateSunAngleHigh.Value;
+            XDroughtMinAngle = _config.DroughtSunAngleLow.Value;
+            XDroughtMaxAngle = _config.DroughtSunAngleHigh.Value;
+            XBadtideMinAngle = _config.BadtideSunAngleLow.Value;
+            XBadtideMaxAngle = _config.BadtideSunAngleHigh.Value;
+            MoonAngle = _config.MoonAngle.Value;
+            if (!_config.RotatingSunEnabled.Value) {
                 return true;
             }
             _transitionProgress += Time.deltaTime;
@@ -187,7 +190,6 @@ namespace SunFix
 
                 }
             }
-            Console.WriteLine($"_light.transform.localRotation: {_light.transform.localRotation}");
             return false;
         }
 
@@ -208,7 +210,6 @@ namespace SunFix
         [HarmonyPatch(typeof(Sun), "UpdateColors", new Type[] { typeof(DayStageTransition) })]
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase original) 
         {
-            Console.WriteLine("Transpiling");
             var shadowMethod = typeof(Patches).GetMethod("SetShadowStrengthDuringNightAndSunrise", BindingFlags.Static | BindingFlags.NonPublic);
             var intensitySetter= typeof(Light).GetProperty("intensity", BindingFlags.Public | BindingFlags.Instance)
                                               .GetAccessors()[0];
@@ -297,7 +298,6 @@ namespace SunFix
             {
                 returnValue = 1f;
             }
-            Console.WriteLine($"shadow: {returnValue}");
             return returnValue;
         }
     }

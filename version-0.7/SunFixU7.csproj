@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <Reference Include="..\Managed\Timberborn*.dll" />
+    <Reference Include="..\Managed\*steamworks*.dll" />
+    <Reference Include="..\Managed\System.Collections.Immutable.dll" />
     <Reference Include="..\Managed\UnityEngine*.dll" />
     <Reference Include="..\Managed\Bindito*.dll" />
     <Reference Include="..\TimberAPI\version-0.7\core\*.dll" />
