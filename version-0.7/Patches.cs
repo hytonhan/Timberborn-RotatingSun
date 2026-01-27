@@ -87,7 +87,7 @@ namespace SunFix
             }
 
             InitDayLengths(dayNightCycle);
-            var progress = (_lastTimestamp + _transitionProgress / dayNightCycle.ConfiguredDayLengthInSeconds * 24f) / _dayLength;
+            var progress = (_lastTimestamp + _transitionProgress / dayNightCycle.DayLengthInSeconds * 24f) / _dayLength;
             if (_light == null) {
                 _light = (Light)typeof(Sun).GetField("_sun", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(__instance);
             }
@@ -152,7 +152,7 @@ namespace SunFix
             }
             else
             {
-                var nightProgress = (_lastTimestamp + ((_transitionProgress /  dayNightCycle.ConfiguredDayLengthInSeconds * 24f) - _dayLength)) / _nightLength;
+                var nightProgress = (_lastTimestamp + ((_transitionProgress /  dayNightCycle.DayLengthInSeconds * 24f) - _dayLength)) / _nightLength;
                 _y = Mathf.Clamp(180 - (nightProgress * 180), 10f, 170f);
                 if (dayStageTransition.CurrentDayStage == DayStage.Night)
                 {

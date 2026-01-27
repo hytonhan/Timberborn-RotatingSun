@@ -11,17 +11,18 @@ namespace SunFix
     {
         public void Configure(IContainerDefinition containerDefinition)
         {
-            containerDefinition.MultiBind<TemplateModule>().ToProvider(ProvideTemplateModule).AsSingleton();
+            // containerDefinition.MultiBind<TemplateModule>().ToProvider(ProvideTemplateModule).AsSingleton();
             containerDefinition.Bind<RotatingSunConfig>().AsSingleton();
             containerDefinition.Bind<Patches>().AsSingleton();
+            // containerDefinition.Bind<RotatingSunflower>().AsTransient();
         }
 
-        private static TemplateModule ProvideTemplateModule()
-        {
-            TemplateModule.Builder builder = new TemplateModule.Builder();
-            builder.AddDecorator<Crop, RotatingSunflower>();
-            return builder.Build();
-        }
+        // private static TemplateModule ProvideTemplateModule()
+        // {
+        //     TemplateModule.Builder builder = new TemplateModule.Builder();
+        //     builder.AddDecorator<Crop, RotatingSunflower>();
+        //     return builder.Build();
+        // }
 
     }
 

@@ -18,8 +18,8 @@ namespace SunFix
         public ModSetting<bool> RotatingSunEnabled {get; } = 
             new (true, ModSettingDescriptor.CreateLocalized("rotatingsun.enablesun"));
 
-        public ModSetting<bool> RotatingSunFlowersEnabled {get; } = 
-            new (false, ModSettingDescriptor.CreateLocalized("rotatingsun.enablerotatingsunflowers"));
+        // public ModSetting<bool> RotatingSunFlowersEnabled {get; } = 
+        //     new (false, ModSettingDescriptor.CreateLocalized("rotatingsun.enablerotatingsunflowers"));
 
         public ModSetting<int> TemperateSunAngleLow {get; } = 
             new (5, ModSettingDescriptor.CreateLocalized("rotatingsun.SunAngleLowTemperate"));
